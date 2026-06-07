@@ -1,0 +1,7 @@
+User-agent: *
+Content-Signal: ai-train=yes, search=yes, ai-input=yes
+Allow: /
+Disallow: /error /sitemap /private /includes
+
+Sitemap: https://miikun95.net/sitemap.xml
+

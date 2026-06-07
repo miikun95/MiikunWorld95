@@ -1,0 +1,16 @@
+<?php
+http_response_code(303);
+$article  = $_POST['article']   ?? '';
+if (!preg_match('/^[0-9]{6}$/', $article)) {
+  http_response_code(422);
+  include '/srv/www/html/error/422/index.html';      exit;
+}
+$pdo = new PDO('mysql:dbname=miikun_world_db;charset=utf8mb4', getenv('DB_USER'), getenv('DB_PASS'), [
+  PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
+  PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
+]);
+$stmt = $pdo->prepare("INSERT INTO claps (article, clap_count) VALUES (:article, 1) ON DUPLICATE KEY UPDATE clap_count = clap_count + 1");
+$stmt->execute([':article'  => $article]);
+header("Location: https://blog.miikun95.net/article/{$article}/");
+exit;
+

@@ -1,0 +1,32 @@
+  </head>
+  <body>
+    <a class="skip-link" href="#main">
+      メインコンテンツにスキップ
+    </a>
+    <nav>
+      <h1><a href="//miikun95.net/">
+        <picture>
+          <source srcset="/mw95-banner.avif" type="image/avif">
+          <source srcset="/mw95-banner.webp" type="image/webp">
+          <img src="/mw95-banner.png" title="MiikunWorld95" alt="MiikunWorld95" width="128" height="64">
+        </picture>
+      </a></h1>
+      <div class="right"><button type="button" id="menu-open" class="mobile"><img src="/menu.svg" title="メニュー" alt="メニューを開く" width="32" height="32"></button></div>
+      <ul id="menu" class="menu">
+        <li><button type="button" id="menu-close" class="mobile"><img src="/close.svg" title="閉じる" alt="メニューを閉じる" width="32" height="32"></button></li>
+        <li><a href="//blog.miikun95.net/" accesskey="b">ブログ</a></li>
+        <li><a href="//miikun95.net/profile/" accesskey="p">プロフィール</a></li>
+        <li><a href="//miikun95.net/download-center/" accesskey="d">ダウンロードセンター</a></li>
+        <li><a href="//miikun95.net/tools/" accesskey="u">便利ツール</a></li>
+<?php /*if ($GLOBALS['is_loggedin'] === true) { ?>
+        <li><a href="//id.miikun95.net/logout/"><img src="/login.svg" title="ログアウト" alt="" width="32" height="32">ログアウト</a></li>
+<?php } else { ?>
+        <li><a href="//id.miikun95.net/login/"><img src="/login.svg" title="ログイン" alt="" width="32" height="32">ログイン</a></li>
+<?php }*/ ?>
+      </ul>
+    </nav>
+    <header>
+      <div class="marquee-container">
+        <div class="marquee"></div>
+      </div>
+    </header>

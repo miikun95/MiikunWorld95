@@ -1,0 +1,60 @@
+<?php include "/srv/www/html/includes/head1.html" ?>
+    <meta name="description" content="MiikunWorld ID">
+    <meta name="keywords" content="miikun95">
+    <title>MiikunWorld ID</title>
+    <meta property="og:title" content="MiikunWorld ID">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://id.miikun95.net/">
+    <meta property="og:image" content="https://miikun95.net/miikun95.png">
+    <meta property="og:site_name" content="MiikunWorld ID">
+<?php include "/srv/www/html/includes/head2.html" ?>
+    <link rel="canonical" href="https://miikun95.net/profile/">
+    <style nonce="<?php echo $GLOBALS['csp_nonce']; ?>">
+<?php include "/srv/www/html/includes/style.html" ?>
+    </style>
+<?php include "/srv/www/html/includes/header.html" ?>
+    <header>
+      <div class="marquee-container">
+        <div class="marquee" id="marquee"></div>
+      </div>
+    </header>
+    <br>
+    <hr>
+    <main id="main">
+      <section>
+        <h2>MiikunWorldIDへようこそ！</h2>
+        
+        <div role="form">
+          <div id="username-label">ユーザー名</div>
+          <div role="textbox" id="username" contenteditable="true" aria-placeholder="ユーザー名" aria-multiline="false" aria-required="true" tabindex="0" aria-labelledby="username-label"></div><br>
+          <div id="website-label">ホームぺージ(任意)</div>
+          <div role="textbox" id="website" contenteditable="true" aria-placeholder="ホームぺージ" aria-multiline="false" aria-required="false" tabindex="0" aria-labelledby="website-label"></div><br>
+          <br>
+          <button type="button" id="cancel">取消</button><br><br>
+          <button type="button" id="register">登録</button><br><br>
+        </div>
+        <hr>
+      </main>
+<?php include "/srv/www/html/includes/footer.html"; ?>
+<?php include "/srv/www/html/includes/cookie-consent.html"; ?>
+    <script nonce="<?php echo $GLOBALS['csp_nonce']; ?>">
+      "use strict";
+      document.getElementById("register").addEventListener("click", function() {
+        var register = createXHR();
+        var data = {
+          name: document.getElementById("username").textContent.replace(/&/g, "&amp;").replace(/'/g, "&apos;").replace(/"/g, "&quot;").replace(/</g, "&lt;").replace(/>/g, "&gt;").trim(),
+          website: document.getElementById("website").textContent.replace(/&/g, "&amp;").replace(/'/g, "&apos;").replace(/"/g, "&quot;").replace(/</g, "&lt;").replace(/>/g, "&gt;").trim(),
+        };
+        register.open("POST", "/finish-oauth-registration.html", true);
+        register.setRequestHeader("Content-Type", "application/json");
+        register.onload = function() {
+          if (register.status === 200) {
+            window.location.href("/my/");
+          }
+        };
+        register.send(JSON.stringify(data));
+      });
+    </script>
+  </body>
+</html>
+

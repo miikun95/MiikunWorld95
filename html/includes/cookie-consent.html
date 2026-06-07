@@ -1,0 +1,134 @@
+    <div class="cookie-consent invisible" id="cookie-consent" tabindex="0">
+      <div class="cookie-info" id="cookie-info">
+        当サイトではCookieを使用します。
+        <br>
+        Cookieの使用に関する詳細は
+        <br>
+        <a href="//miikun95.net/privacy-and-cookie-policy/">プライバシー／Cookieポリシー</a>
+        <br>
+        をご覧ください。
+      </div>
+      <br>
+      <button id="cookie-setting-expand" type="button">クッキー設定</button>
+      <hr>
+      <div id="cookie-setting" class="cookie-setting hidden">
+        <div>
+          <button id="cookie-detail1-expand" class="cookie-detail-expand" type="button" aria-label="クッキーの詳細を表示">+</button>
+          動作に必要なCookie
+          <input type="checkbox" id="agree-cookie1" checked disabled>
+        </div>
+        <div id="cookie-detail1" class="cookie-detail hidden">
+          このCookieはウェブサイトが正常に動作するために必要なものです。
+          <br>
+          このメニューでこのCookieを無効にすることはできません。
+          <br>
+          このCookieは、アクセスカウンターのカウントアップ、設定の保存など、
+          <br>
+          ウェブサイトのアクセス、メニューの操作などに応じてに設定されます。
+          <br>
+          このCookieをブロックするようにブラウザを設定することは可能ですが、
+          <br>
+          ウェブサイトの一部が機能しなくなります。
+          <br>
+          このCookieが個人を特定できる情報を保存することはありません。
+        </div>
+        <hr>
+      </div>
+      <button id="cookie-agree-btn" class="cookie-agree" type="button">OK</button>
+    </div>
+    <noscript>
+      <div class="cookie-consent" id="cookie-consent-alt">
+        <div class="cookie-info">
+          当サイトではCookieを使用します。
+          <a href="//miikun95.net/privacy-and-cookie-policy/" rel="privacy-policy">プライバシー／Cookieポリシー</a>
+        </div>
+      </div>
+    </noscript>
+    <script nonce="<?php echo $GLOBALS['csp_nonce']; ?>">
+      "use strict";
+      window.addEventListener("DOMContentLoaded", function() {
+        var ckConsentBanner = document.getElementById("cookie-consent");
+        var ckConsentInfo = document.getElementById("cookie-info");
+        var ckSet = document.getElementById("cookie-setting");
+        var ckSetExp = document.getElementById("cookie-setting-expand");
+        var ckDet1 = document.getElementById("cookie-detail1");
+        var ckDet1Exp = document.getElementById("cookie-detail1-expand");
+        var ckAgreeBtn = document.getElementById("cookie-agree-btn");
+        function getConsent() {
+          var n = "__Secure-CONSENT=";
+          var c = document.cookie;
+          if (!c || c.length === 0) return null;
+          var s = c.indexOf(n)
+          if (s !== -1) {
+            var i = c.indexOf(";", s);
+            if (i === -1) { i = c.length; }
+            return decodeURIComponent(c.substring(s + n.length, i));
+            var r = decodeURIComponent(c.substring(s + n.length, i));
+            return (r.length > 0) ? r : null;
+          } else { return null; }
+        }
+        var ckConsentStatus = getConsent();
+        ckConsentBanner.setAttribute("class", "cookie-consent");
+        if (!ckConsentStatus) {
+          ckConsentBanner.setAttribute("class", "cookie-consent cookie-consent-is-open");
+          ckConsentBanner.setAttribute("tabindex", "-1");
+        } else {
+          ckConsentBanner.addEventListener("click", function() {
+            ckConsentBanner.setAttribute("class", "cookie-consent cookie-consent-is-open");
+            ckConsentBanner.setAttribute("tabindex", "-1");
+          }, { once: true });
+        }
+        ckSetExp.addEventListener("click", function() {
+          ckSetExp.setAttribute("class", "cookie-setting-expand hidden");
+          ckSet.setAttribute("class", "cookie-setting");
+        });
+        ckDet1Exp.addEventListener("click", function() {
+          ckDet1Exp.setAttribute("class", "cookie-detail-expand hidden");
+          ckDet1.setAttribute("class", "cookie-detail");
+        });
+
+        function setConsentStatus(a) {
+          var n = 32;
+          var id = "";
+          if (window.crypto && window.crypto.getRandomValues && window.btoa) {
+            var u = new Uint8Array(n);
+            window.crypto.getRandomValues(u);
+            var b = "";
+            for (var i = 0; i < u.length; i++) {
+              b += String.fromCharCode(u[i]);
+            }
+            id = window.btoa(b).substring(0, n);
+          } else {
+            var c = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+            for (var i = 0; i < n; i++) {
+              id += c.charAt(Math.floor(Math.random() * c.length));
+            }
+          }
+
+          var p = ["req"];
+          var d = {
+            "id": id,
+            "at": new Date().toISOString(),
+            "v": "1",
+            "s": p
+          };
+          var j = JSON.stringify(d);
+          var e = new Date();
+          e.setFullYear(e.getFullYear() + 1);
+          document.cookie = "__Secure-CONSENT=" + encodeURIComponent(j) +
+            "; expires=" + e.toUTCString() +
+"; path=/; domain=miikun95.net; Secure; SameSite=Strict";
+          ckSet.setAttribute("class", "cookie-setting hidden");
+          ckSetExp.setAttribute("class", "cookie-setting-expand");
+          setTimeout(function() {
+            ckConsentBanner.setAttribute("class", "cookie-consent");
+            ckConsentBanner.setAttribute("tabindex", "0");
+            ckConsentBanner.addEventListener("click", function() {
+              ckConsentBanner.setAttribute("class", "cookie-consent cookie-consent-is-open");
+              ckConsentBanner.setAttribute("tabindex", "-1");
+            }, { once: true });
+          }, 10);
+        }
+        ckAgreeBtn.addEventListener("click", function() { setConsentStatus(2); });
+    });
+    </script>

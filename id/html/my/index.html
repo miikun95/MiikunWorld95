@@ -1,0 +1,71 @@
+<?php
+if (!$GLOBALS['is_loggedin']) {
+  http_response_code(401);
+include "/srv/www/html/includes/head1.html"
+?>
+    <meta name="description" content="MiikunWorld ID">
+    <meta name="keywords" content="miikun95">
+    <title>401認証が必要です｜MiikunWorld</title>
+    <meta property="og:title" content="401認証が必要です｜MiikunWorld">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://id.miikun95.net/my/">
+    <meta property="og:image" content="https://miikun95.net/miikun95.png">
+<?php include "/srv/www/html/includes/head2.html" ?>
+    <link rel="canonical" href="https://miikun95.net/my/">
+    <style nonce="<?php echo $GLOBALS['csp_nonce']; ?>">
+<?php include "/srv/www/html/includes/style.html" ?>
+    </style>
+<?php include "/srv/www/html/includes/header.html" ?>
+    <header>
+      <div class="marquee-container">
+        <div class="marquee" id="marquee"></div>
+      </div>
+    </header>
+    <br>
+    <hr>
+    <main id="main">
+      <section>
+        <h2>認証が必要です。</h2>
+        <a href="/login/">ログイン</a>
+      </section>
+    </main>
+<?php include "/srv/www/html/includes/footer.html"; ?>
+<?php include "/srv/www/html/includes/cookie-consent.html"; ?>
+  </body>
+</html>
+<?php
+} else {
+include "/srv/www/html/includes/head1.html"
+?>
+    <meta name="description" content="MiikunWorld ID">
+    <meta name="keywords" content="miikun95">
+    <title>MiikunWorld ID</title>
+    <meta property="og:title" content="MiikunWorld ID">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://id.miikun95.net/my/">
+    <meta property="og:image" content="https://miikun95.net/miikun95.png">
+<?php include "/srv/www/html/includes/head2.html" ?>
+    <link rel="canonical" href="https://miikun95.net/my/">
+    <style nonce="<?php echo $GLOBALS['csp_nonce']; ?>">
+<?php include "/srv/www/html/includes/style.html" ?>
+    </style>
+<?php include "/srv/www/html/includes/header.html" ?>
+    <header>
+      <div class="marquee-container">
+        <div class="marquee" id="marquee"></div>
+      </div>
+    </header>
+    <br>
+    <hr>
+    <main id="main">
+      <section>
+        <h2>ようこそ！<?php echo ""; ?>さん</h2>
+        <p></p>
+      </section>
+    </main>
+<?php include "/srv/www/html/includes/footer.html"; ?>
+<?php include "/srv/www/html/includes/cookie-consent.html"; ?>
+  </body>
+</html>
+<?php } ?>
+

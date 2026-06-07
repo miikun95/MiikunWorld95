@@ -1,0 +1,35 @@
+<?php
+$title = 'ホームページの作り方｜MiikunWorld95';
+$descr = '簡単なホームページの作り方ガイド！コピペで使えるサンプルHTML付き！';
+$keywd = 'MiikunWorld95,ホームページ 作り方,ホームページ 作成';
+$url = 'https://miikun95.net/website-howto/';
+include '/srv/www/html/includes/01.html';
+?>
+    <style nonce="<?php echo $GLOBALS['csp_nonce']; ?>">
+<?php include '/srv/www/html/includes/style.html'; ?>
+    </style>
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      "itemListElement": [{
+        "@type": "ListItem",
+        "position": 1,
+        "name": "ホームページの作り方",
+        "item": "https://blog.miikun95.net/"
+      }]
+    }
+    </script>
+<?php
+include '/srv/www/html/includes/02.html';
+include '/srv/www/html/includes/03.html';
+?>
+      <section>
+        <h2>ホームページの作り方</h2>
+        簡単なHTMLのサンプル集です<br>
+      </section>
+<?php
+include '/srv/www/html/includes/05.html';
+?>
+  </body>
+</html>

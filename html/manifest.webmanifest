@@ -1,0 +1,48 @@
+{
+  "$schema": "https://json.schemastore.org/web-manifest-combined.json",
+  "name": "MiikunWorld95",
+  "short_name": "M.W.95",
+  "description": "MiikunWorld95では、様々なコンテンツを投稿しています",
+  "id": "https://miikun95.net/",
+  "lang": "ja",
+  "dir": "ltr",
+  "orientation": "any",
+  "start_url": "/",
+  "scope": "/",
+  "display": "browser",
+  "theme_color": "#CCCCCC",
+  "background_color": "#CCCCCC",
+  "prefer_related_applications": false,
+  "icons": [
+    {
+      "src": "/miikun95-64.png",
+      "sizes": "64x64",
+      "type": "image/png"
+    },
+    {
+      "src": "/miikun95-128.png",
+      "sizes": "128x128",
+      "type": "image/png"
+    },
+    {
+      "src": "/miikun95-256.png",
+      "sizes": "256x256",
+      "type": "image/png"
+    },
+    {
+      "src": "/miikun95-384.png",
+      "sizes": "384x384",
+      "type": "image/png"
+    },
+    {
+      "src": "/miikun95.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ],
+  "splash_screen": {
+    "src": "/apple-touch-icon.png",
+    "sizes": "512x512",
+    "background_color": "#FFFFFF"
+  }
+}

@@ -1,0 +1,96 @@
+    <script nonce="<?php echo $GLOBALS['csp_nonce']; ?>">
+      "use strict";
+      if (window.trustedTypes && window.trustedTypes.createPolicy) {
+        if (!window.trustedTypes.defaultPolicy) {
+          window.trustedTypes.createPolicy('default', {
+            createScriptURL: function(url) {
+              var s = String(url);
+              if (
+                s.indexOf("https://www.recaptcha.net/") === 0 ||
+                s.indexOf("https://www.gstatic.com/") === 0 ||
+                s.indexOf("blob:") === 0
+              ) { return s; }
+              return null;
+            },
+            createHTML: function(html) {
+              return html;
+            }
+          });
+        }
+      }
+      window.resetCAPTCHA = function() {
+        grecaptcha.enterprise.reset(window.widgetId);
+      };
+      window.onloadCallback = function() {
+        window.widgetId = grecaptcha.enterprise.render("g-recaptcha", {
+          "sitekey": "6LfiA9ssAAAAAAISsozDOjO8e6S5AgeFktQTWKUW",
+          "theme": "light",
+          "size": "normal",
+          "tabindex": "0",
+          "action": "<?php echo $recaptcha_act; ?>",
+          "callback" : "verifyRequestXHR",
+          "expired-callback": "resetCAPTCHA"
+        });
+        document.getElementById("g-recaptcha").addEventListener("submit", function(e) {
+          var token = grecaptcha.enterprise.getResponse(window.widgetId);
+          if (token) {
+            document.querySelector("[name=token]").setAttribute("value", token);
+            document.querySelector("[name=token]").value = token;
+          }
+        });
+      };
+      document.addEventListener("DOMContentLoaded", function() {
+        document.querySelectorAll("<?php echo $query; ?>")[<?php echo $index; ?>].addEventListener("click", function() {
+          if (window.grecaptcha || window.isRecaptchaLoading) { return; }
+          window.isRecaptchaLoading = true;
+          var recaptcha = document.getElementById("g-recaptcha");
+          var statusText = document.getElementById("status-label");
+          var loadProgressBar = document.getElementById("load-progress-bar");
+          var recaptchaXHR = createXHR();
+          var recaptchaURL = "https://www.recaptcha.net/recaptcha/enterprise.js?onload=onloadCallback&render=explicit&hl=ja";
+          loadProgressBar.setAttribute("class", "dl-progress-bar-show");
+          recaptchaXHR.open("GET", recaptchaURL, true);
+          recaptchaXHR.responseType = "blob";
+          //recaptchaXHR.setRequestHeader("X-Requested-With", "XMLHttpRequest");
+          recaptchaXHR.onloadstart = function() {
+            statusText.removeAttribute("class");
+            recaptcha.removeAttribute("class");
+          };
+          recaptchaXHR.onprogress = function(e) {
+            if (e.lengthComputable) { loadProgressBar.setAttribute("aria-valuenow", Math.floor((e.loaded / e.total) * 100)); }
+          }
+          recaptchaXHR.onload = function() {
+            if (recaptchaXHR.status >= 200 && recaptchaXHR.status < 400) {
+              loadProgressBar.setAttribute("aria-valuenow", "100");
+              statusText.textContent = "読込完了！";
+              var recaptchaScript = document.createElement("script");
+              var recaptchaBlob = new Blob([recaptchaXHR.response], { type: "application/javascript" });
+              recaptchaScript.src = URL.createObjectURL(recaptchaBlob);
+              recaptchaScript.type = "module";
+              document.head.appendChild(recaptchaScript);
+              setTimeout(function() {
+                loadProgressBar.setAttribute("aria-valuenow", "0");
+                setTimeout(function() {
+                  loadProgressBar.removeAttribute("class");
+                  statusText.setAttribute("class", "hidden");
+                  setTimeout(function() {
+                    loadProgressBar.setAttribute("class", "invisible");
+                  }, 400);
+                }, 50);
+              }, 600);
+            }
+          };
+          recaptchaXHR.onerror = function() {
+            loadProgressBar.setAttribute("class", "error");
+            loadProgressBar.setAttribute("aria-valuenow", "100");
+            statusText.textContent = "致命的な問題が発生しました！";
+            recaptcha.setAttribute("class", "hidden");
+            window.isRecaptchaLoading = false;
+            setTimeout(function() {
+              statusText.setAttribute("class", "hidden");
+            }, 600);
+          };
+          recaptchaXHR.send();
+        });
+      });
+    </script>

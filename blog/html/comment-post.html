@@ -1,0 +1,110 @@
+<?php
+http_response_code(303);
+require 'vendor/autoload.php';
+use Google\Cloud\RecaptchaEnterprise\V1\Client\RecaptchaEnterpriseServiceClient;
+use Google\Cloud\RecaptchaEnterprise\V1\Event;
+use Google\Cloud\RecaptchaEnterprise\V1\Assessment;
+use Google\Cloud\RecaptchaEnterprise\V1\CreateAssessmentRequest;
+use Google\Cloud\RecaptchaEnterprise\V1\TokenProperties\InvalidReason;
+$username = trim($_POST['nickname']) ?? '名無しさん';
+if ($username === '') { $username = '名無しさん'; }
+$website  = trim($_POST['website']) ?? '';
+$comment  = trim($_POST['comment'])  ?? '';
+$article  = $_POST['article']   ?? '';
+$token  = $_POST['token']  ?? '';
+$action   = $_POST['action']   ?? '';
+$recaptchaKey = getEnv('RECAPTCHA_KEY');
+$project = 'miikunworld95-1759993451408';
+if (!preg_match('/^[0-9]{6}$/', $article)) {
+  http_response_code(422);
+  include '/srv/www/html/error/422/index.html';
+  exit;
+}
+if (empty($token)) {
+  $_SESSION['error'] = ['captcha_invalid'];
+  header("Location: https://blog.miikun95.net/article/{$article}/");
+  exit;
+}
+function getConsentId() {
+  if (isset($_COOKIE['__Secure-CONSENT'])) {
+    $consentJson = json_decode(urldecode($_COOKIE['__Secure-CONSENT']), true);
+    return $consentJson['id'] ?? null;
+  }
+  return null;
+}
+$userId = $_SESSION['user_uuid'] ?? getConsentId() ?? session_id();
+$client = new RecaptchaEnterpriseServiceClient([
+  'transport' => 'rest',
+  'credentials' => '/srv/www/miikunworld95-1759993451408-734e80132aaa.json'
+]);
+$projectName = $client->projectName($project);
+$event = (new Event())
+  ->setSiteKey($recaptchaKey)
+  ->setToken($token)
+  ->setHashedAccountId(hash('sha512', $userId, true));
+$assessment = (new Assessment())
+  ->setEvent($event);
+$request = (new CreateAssessmentRequest())
+  ->setParent($projectName)
+  ->setAssessment($assessment);
+$response = $client->createAssessment($request);
+if ($response->getTokenProperties()->getValid() == false) {
+  $_SESSION['error'] = ['captcha_invalid'];
+  header("Location: https://blog.miikun95.net/article/{$article}/");
+  exit;
+}
+if ($response->getTokenProperties()->getAction() == $action) {
+  $data = 'api_key=' . urlencode(getEnv("AKISMET_KEY")) .
+    '&blog=' . urlencode('https://blog.miikun95.net') .
+    '&user_ip=' . urlencode($_SERVER['REMOTE_ADDR']) .
+    '&user_agent=' . urlencode($_SERVER['HTTP_USER_AGENT']) .
+    '&referrer=' . urlencode($_SERVER['HTTP_REFERER'] ?? '') .
+    '&comment_type=comment' .
+    '&comment_author=' . urlencode($username) .
+    '&comment_author_url=' . urlencode($website) .
+    '&comment_content=' . urlencode($comment) .
+    '&comment_date_gmt=' . urlencode(gmdate('Y-m-d\TH:i:s\Z')) .
+    '&honeypot_field_name=external' .
+    '&external=' .
+    '&blog_lang=ja' .
+    '&blog_charset=UTF-8' .
+    '&user_role=user';
+  $data_length = strlen($data);
+  $response = '';
+  $ch = curl_init('https://rest.akismet.com/1.1/comment-check');
+  curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+  curl_setopt($ch, CURLOPT_POST, true);
+  curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
+  curl_setopt($ch, CURLOPT_HTTPHEADER, [
+    'Content-Type: application/x-www-form-urlencoded; charset=UTF-8',
+    "Content-Length: {$data_length}",
+    'Accept-Encoding: UTF-8',
+    'Accept-Language: ja',
+    'Upgrade-Insecure-Requests: 1',
+    'Cache-Control: no-store, no-cache',
+    'Pragma: no-cache'
+  ]);
+  $response = curl_exec($ch);
+  $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+  curl_close($ch);
+  if ($response !== 'false') {
+    $_SESSION['error'] = ['comment_not_authorized'];
+    header("Location: https://blog.miikun95.net/article/{$article}/");
+    exit;
+  } else {
+    $pdo = new PDO('mysql:dbname=miikun_world_db;charset=utf8mb4', getenv('DB_USER'), getenv('DB_PASS'), [
+      PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
+      PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
+    ]);
+    $stmt = $pdo->prepare("INSERT INTO comments (article, username, website, content) VALUES (:article, :username, :website, :content)");
+    $stmt->execute([
+      ':article'  => $article,
+      ':username' => $username,
+      ':website' => $website,
+      ':content'  => $comment
+    ]);
+    header("Location: https://blog.miikun95.net/article/{$article}/");
+    exit;
+  }
+}
+

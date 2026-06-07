@@ -1,0 +1,171 @@
+<?php
+$message = "";
+try {
+  $count = $GLOBALS['redis']->get("visit_count");
+  if ($count % 1000 === 0) {
+    $message = "おめでとうございます！ キリ番ゲット！";
+  } else {
+    $message = "ようこそ！miikun95のホームページ&nbsp;MiikunWorld95へ！";
+  }
+} catch (Exception $e) {
+  $count = "読込失敗 :(";
+  $message = "ようこそ！miikun95のホームページ&nbsp;MiikunWorld95へ！";
+}
+$title = "MiikunWorld95";
+$desc = "便利ツール集、フリーソフト、マイクラのMod、ブログ等様々なコンテンツをmiikun95のホームページ「MiikunWorld95」でチェックしよう！";
+include '/srv/www/html/includes/head1.html'; ?>
+    <meta name="description" content="<?php echo $desc; ?>">
+    <meta name="keywords" content="miikun95,MiikunWorld95,マイクラ Mod,マインクラフト Mod,フリーソフト,Web便利ツール,ブログ,自作ソフト">
+    <title><?php echo $title; ?></title>
+    <meta property="og:title" content="<?php echo $title; ?>">
+    <meta property="og:description" content="<?php echo $desc; ?>">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://miikun95.net/">
+    <meta property="og:image" content="https://miikun95.net/miikun95.png">
+    <meta property="og:image:alt" content="miikun95">
+<?php include '/srv/www/html/includes/head2.html'; ?>
+    <link rel="canonical" href="https://miikun95.net/">
+    <style nonce="<?php echo $GLOBALS['csp_nonce']; ?>">
+<?php include "/srv/www/html/includes/style.html"; ?>
+    </style>
+    <script nonce="<?php echo $GLOBALS['csp_nonce']; ?>" type="application/ld+json">
+      {
+        "@context" : "https://schema.org",
+        "@type" : "WebSite",
+        "schemaVersion": "https://schema.org/docs/releases.html#v30.0",
+        "name" : "MiikunWorld95",
+        "alternateName": ["M.W.95"],
+        "url" : "https://miikun95.net/",
+        "copyrightYear" : "2024",
+        "archivedAt": "https://web.archive.org/web/https://miikun95.net/",
+        "inLanguage" : {
+          "@type": "Language",
+          "alternateName": "ja"
+        },
+        "creator" : {
+          "@type": "Person",
+          "name": "miikun95",
+          "givenName": "Taro",
+          "familyName": "Miikun",
+          "identifier": "miikun95",
+          "gender": "https://schema.org/Male",
+          "description": "miikun95",
+          "knowsLanguage": {
+            "@type": "Language",
+            "alternateName": "ja"
+          },
+          "image": "https://miikun95.net/miikun95.png",
+          "url": "https://miikun95.net/profile/",
+          "sameAs": [
+            "https://github.com/miikun95/",
+            "https://www.x.com/miikun95/",
+            "https://www.instagram.com/miikun.95/",
+            "https://www.facebook.com/miikun95/",
+            "https://www.youtube.com/channel/UCG2I7k0jbXjyeNOzEc9Qitg",
+            "https://www.blogger.com/profile/15531813508732080195",
+            "https://www.tiktok.com/@miikun95/"
+          ]
+        }
+      }
+    </script>
+    <script nonce="<?php echo $GLOBALS['csp_nonce']; ?>" type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "ImageObject",
+      "schemaVersion": "https://schema.org/docs/releases.html#v30.0",
+      "author": {
+        "@type": "Person",
+        "name": "miikun95",
+        "givenName": "Taro",
+        "familyName": "Miikun",
+        "identifier": "miikun95",
+        "gender": "https://schema.org/Male",
+        "description": "miikun95",
+        "knowsLanguage": {
+          "@type": "Language",
+          "alternateName": "ja"
+        },
+        "image": "https://miikun95.net/miikun95.png",
+        "url": "https://miikun95.net/profile/",
+        "sameAs": [
+          "https://www.blogger.com/profile/15531813508732080195",
+          "https://github.com/miikun95/",
+          "https://www.x.com/miikun95/",
+          "https://www.instagram.com/miikun.95/",
+          "https://www.youtube.com/channel/UCG2I7k0jbXjyeNOzEc9Qitg",
+          "https://www.tiktok.com/@miikun95/"
+        ]
+      },
+      "creator": {
+        "@type": "Person",
+        "name": "miikun95",
+        "givenName": "Taro",
+        "familyName": "Miikun",
+        "identifier": "miikun95",
+        "gender": "https://schema.org/Male",
+        "description": "miikun95",
+        "knowsLanguage": {
+          "@type": "Language",
+          "alternateName": "ja"
+        },
+        "image": "https://miikun95.net/miikun95.png",
+        "url": "https://miikun95.net/profile/",
+        "sameAs": [
+          "https://www.blogger.com/profile/15531813508732080195",
+          "https://github.com/miikun95/",
+          "https://www.x.com/miikun95/",
+          "https://www.instagram.com/miikun.95/",
+          "https://www.youtube.com/channel/UCG2I7k0jbXjyeNOzEc9Qitg",
+          "https://www.tiktok.com/@miikun95/"
+        ]
+      },
+      "contentUrl": "/miikun95.png",
+      "datePublished": "2025-01-10",
+      "description": "MiikunWorld95のミーくん",
+      "name": "ミーくん",
+      "copyrightNotice": "(C) 2025-2026 miikun95"
+    }
+    </script>
+    <meta name="p:domain_verify" content="fe40048b0f4806d783bccbc8a64812a8">
+    <meta name="facebook-domain-verification" content="a4b3dl78th09i3r0nfw8tpz70ockhi">
+    <meta name="google-site-verification" content="to-TLojcML6Ko6a_BrEP3gGsOxw0g1hEGaW_IwpkNdQ">
+    <meta name="msvalidate.01" content="027F9FA0A8EFA54BAFCDF389A346FBE0">
+<?php include '/srv/www/html/includes/header.html'; ?>
+    <header>
+      <div class="access-counter-container">
+        あなたは
+        <span class="access-counter" id="access-counter"><?php echo $count; ?></span>
+        人目の訪問者です！
+      </div>
+      <div class="marquee-container">
+        <div class="marquee"><?php echo $message; ?></div>
+      </div>
+    </header>
+    <br>
+    <hr>
+    <main id="main">
+      <section>
+        <h2>ようこそ！<br>MiikunWorld95へ！</h2>
+        <hr>
+        <picture>
+          <source srcset="/miikun95-128.avif" type="image/avif">
+          <source srcset="/miikun95-128.webp" type="image/webp">
+          <img src="/miikun95-128.png" title="miikun95" alt="miikun95" width="84" height="84" fetchpriority="high">
+        </picture>
+        <h3>プロフィール</h3>
+        <p>miikun95のプロフィールをチェック！</p>
+        <a href="/profile/" aria-label="プロフィールを見る">プロフィールを詳しく見る</a>
+        <hr>
+      </section>
+      <section>
+        <h2>IP確認、Base64変換などシンプルで役立つ便利ツール！</h2>
+        <hr>
+        <h3>IPチェッカー 最新のUA-CHも確認出来るツールです！</h3>
+        <a href="/tools/001/" aria-label="IPチェッカーを試す">IPチェッカー</a>
+        <a href="/tools/">便利ツールを全て見る</a>
+      </section>
+    </main>
+<?php include '/srv/www/html/includes/footer.html';
+include '/srv/www/html/includes/cookie-consent.html'; ?>
+  </body>
+</html>
