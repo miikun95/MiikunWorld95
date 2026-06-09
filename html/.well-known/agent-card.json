@@ -1,0 +1,24 @@
+{
+  "$schema": "https://a2a-protocol.org/schemas/agent-card.json",
+  "name": "MiikunWorld95 Core Agent",
+  "version": "1.0.0",
+  "description": "Autonomous agent representing miikun95.net for agent-to-agent interactions.",
+  "capabilities": [
+    "content_delivery",
+    "markdown_response"
+  ],
+  "supportedInterfaces": [
+    {
+      "interface": "https://a2a-protocol.org/interfaces/discovery",
+      "url": "https://miikun95.net/.well-known/agent-card.json",
+      "transport": "HTTP/2"
+    }
+  ],
+  "skills": [
+    {
+      "id": "fetch_blog_markdown",
+      "name": "Fetch Blog as Markdown",
+      "description": "Provides blog contents in structured Markdown when Accept: text/markdown header is provided."
+    }
+  ]
+}

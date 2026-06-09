@@ -1,0 +1,14 @@
+{
+  "$schema": "https://datatracker.ietf.org/wg/webbotauth/schema.json",
+  "keys": [
+    {
+      "kty": "EC",
+      "crv": "P-256",
+      "kid": "miikun95-bot-ecdsa-2026",
+      "x": "f83OJ3D2xF108ArUjaM6PyjBw94FRtv6KQCcl76wZrg",
+      "y": "x_da_9_MhM78f_p_C88_H8b8_vN1_9_v6KQCcl76wZrg",
+      "use": "sig",
+      "alg": "ES256"
+    }
+  ]
+}

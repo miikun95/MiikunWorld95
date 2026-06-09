@@ -1,0 +1,42 @@
+<?php
+$descr = 'MiikunWorld95';
+$keywd = 'miikun95';
+$url = 'https://rpg-sp.m95.world';
+if (password_verify($_POST['password'], '$argon2id$v=19$m=65536,t=4,p=1$cEdkUm1TZ3A5ZWxVTnV2Vw$6vfS/PgHq0HlbUynIEXIvKNLxopxReL8tLg9ohqAGrM')) {
+$title = '？？？｜MiikunWorld95';
+include '/srv/www/html/includes/01.html';
+    ?><meta name="robots" content="noindex,nofollow,noarchive">
+    <style nonce="<?php echo $GLOBALS['csp_nonce']; ?>">
+<?php include '/srv/www/html/includes/style.html'; ?>
+</style>
+<?php include '/srv/www/html/includes/02.html'; ?>
+    <main id="main">
+      <section>
+        <h2>扉の真のパスワード</h2>
+        <p>0123</p>
+      </section>
+    </main><?php
+include '/srv/www/html/includes/footer.html';
+include '/srv/www/html/includes/cookie-consent.html';
+  ?></body>
+</html><?php
+} else {
+$title = '認証｜MiikunWorld95';
+include '/srv/www/html/includes/01.html';
+    ?><meta name="robots" content="noindex,nofollow,noarchive">
+    <style nonce="<?php echo $GLOBALS['csp_nonce']; ?>">
+<?php include '/srv/www/html/includes/style.html'; ?>
+</style><?php
+include '/srv/www/html/includes/02.html';
+    ?><main id="main">
+      <section>
+        <h2>認証</h2>
+        <form method="POST" action="/">
+          <input name="password" type="password" autocomplete="password" placeholder="パスワード">
+          <button>認証</button>
+        </form>
+      </section>
+    </main><?php
+include '/srv/www/html/includes/footer.html';
+include '/srv/www/html/includes/cookie-consent.html';
+}
