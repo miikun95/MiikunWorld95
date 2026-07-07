@@ -1,3 +1,4 @@
 private/
 .tls/
+vendor/
 git/html/*.git/
