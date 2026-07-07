@@ -1,0 +1,202 @@
+<?php                                        $state = base64_encode(random_bytes(32));  $_SESSION['oauth_state'] = $state;       ?>
+<?php include "/srv/www/html/includes/head1.html" ?>
+    <meta name="description" content="MiikunWorld ID">
+    <meta name="keywords" content="miikun95">
+    <title>MiikunWorld ID</title>
+    <meta property="og:title" content="MiikunWorld ID">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://id.miikun95.net/login/">
+    <meta property="og:image" content="https://miikun95.net/miikun95.png">
+    <meta property="og:site_name" content="MiikunWorld ID">
+<?php include "/srv/www/html/includes/head2.html" ?>
+    <link rel="canonical" href="https://miikun95.net/login/">
+    <script nonce="48xccMurSqpuoNUX3r2bW0xwxU3eSsCyzOH7G5tWiVQd+1vkOQ8DVlEyYgR8q7ad">
+      "use strict";
+      if (window.trustedTypes && window.trustedTypes.createPolicy) {
+        if (!window.trustedTypes.defaultPolicy) {
+          window.trustedTypes.createPolicy('default', {
+            createScriptURL: function(url) {
+              var s = String(url);
+              if (
+                s.indexOf("https://www.recaptcha.net/") === 0 ||
+                s.indexOf("https://recaptcha.net/") === 0 ||
+                s.indexOf("https://www.gstatic.com/") === 0
+              ) {
+                return s;
+              }
+              return null; 
+            }
+          });
+        }
+      }
+
+      window.onloadCallback = function() {
+        document.getElementById("loginid").addEventListener("click", function() {
+          window.widgetId = grecaptcha.enterprise.render("g-recaptcha", {
+            "sitekey": "6LeFveMrAAAAAFtiEsCxo4juadGjNTfUO-QHNtRH",
+            "theme": "light",
+            "size": "normal",
+            "tabindex": "0",
+            "action": "LOGIN"
+          });
+        }, { once: true });
+      }
+    </script>
+    <script src="https://www.recaptcha.net/recaptcha/enterprise.js?onload=onloadCallback&render=explicit&hl=ja" nonce="48xccMurSqpuoNUX3r2bW0xwxU3eSsCyzOH7G5tWiVQd+1vkOQ8DVlEyYgR8q7ad" async defer></script>
+    <style nonce="<?php echo $GLOBALS['csp_nonce']; ?>">
+<?php include "/srv/www/html/includes/style.html" ?>
+
+      #g-recaptcha {
+        width: 301px;
+        height: 75px;
+        overflow: hidden;
+        border: 1px solid #000000;
+        border-radius: 4px;
+        background-image: url("/miikun95-64.webp");
+        background-repeat: repeat;
+        background-size: 32px 32px;
+      }
+
+      .gsi-material-button {
+        height: 40px;
+        border: 3px ridge #747775;
+        white-space: nowrap;
+        overflow: hidden;
+      }
+
+      .gsi-material-button-content-wrapper {
+        display: inline-block;
+        vertical-align: top;
+      }
+
+      .gsi-material-button-icon {
+        display: inline-block;
+        vertical-align: middle;
+        width: 20px;
+        height: 20px;
+        margin-left: 12px;
+        margin-right: 10px;
+      }
+
+      .gsi-material-button-contents {
+        display: inline-block;
+        vertical-align: middle;
+        margin-right: 12px;
+      }
+    </style>
+<?php include "/srv/www/html/includes/header.html" ?>
+    <header>
+      <div class="marquee-container">
+        <div class="marquee" id="marquee"></div>
+      </div>
+    </header>
+    <br>
+    <hr>
+    <main id="main">
+      <section>
+        <h2>ユーザーログイン</h2>
+        <div role="form">
+          <div id="loginid-label">ログインID</div>
+          <div role="textbox" id="loginid" contenteditable="true" aria-placeholder="ログインID" aria-multiline="false" aria-required="true" tabindex="0" aria-labelledby="loginid-label"></div><br>
+          <div id="g-recaptcha">
+          </div>
+          <br>
+          <button type="button" id="login" disabled>ログイン</button><br><br>
+          <a href="/register/">アカウントを持っていません</a><br><br>
+          <a href="//miikun95.net/">MiikunWorld95に戻る</a>
+        </div>
+        <hr>
+        <h2>外部アカウントでログイン</h2>
+        <button type="button" class="gsi-material-button" id="g-login" disabled>
+          <span class="gsi-material-button-state"></span>
+            <span class="gsi-material-button-content-wrapper">
+              <span class="gsi-material-button-icon">
+              <img src="/google-logo.svg" title="Google" alt="" width="20" height="20">
+            </span>
+            <span class="gsi-material-button-contents">Googleでログイン</span>
+          </span>
+        </button>
+      <script nonce="<?php echo $GLOBALS['csp_nonce']; ?>">
+      "use strict";
+      document.getElementById("login").addEventListener("click", async function() {
+        var loginId = document.getElementById("loginid").textContent;
+        await navigator.credentials.create({
+    publicKey: {
+            challenge: new Uint8Array(32),
+            rp: {
+              name: "miikunworld-id",
+              id: "id.miikun95.net"
+            },
+            user: {
+              id: new Uint8Array([65, 66, 67, 68, 69]).buffer,
+              name: loginId,
+              displayName: loginId
+            },
+            pubKeyCredParams: [
+              {alg: -7, type:"public-key"},
+        {alg: -257, type:"public-key"}
+            ],
+            excludeCredentials: [{
+              id: new Uint8Array([65, 66, 67, 68, 69]).buffer,
+              type: "public-key"
+            }],
+            authenticatorSelection: {
+              requireResidentKey: true,
+              userVerification: "preferred"
+            },
+    } 
+        });
+      });
+      </script>
+      <script nonce="<?php echo $GLOBALS['csp_nonce']; ?>">
+        document.getElementById("g-login").addEventListener("click", oauthSignIn);
+          function oauthSignIn() {
+          var form = document.createElement("form");
+          form.setAttribute("method", "GET");
+          form.setAttribute("action", "https://accounts.google.com/o/oauth2/v2/auth");
+          var params = {
+            "client_id": "20945063141-7p3gdiobthnj3samcboqmttk1tn1rg83.apps.googleusercontent.com",
+            "redirect_uri": "https://id.miikun95.net/login.html",
+            "response_type": "code",
+            "scope": "openid",
+            "include_granted_scopes": "true",
+            "state": "<?php echo $state ?>"
+          };
+
+          for (var p in params) {
+            var input = document.createElement("input");
+            input.setAttribute("type", "hidden");
+            input.setAttribute("name", p);
+            input.setAttribute("value", params[p]);
+            form.appendChild(input);
+          }
+
+          document.body.appendChild(form);
+          form.submit();
+        }
+      </script>
+    </main>
+    <?php include "/srv/www/html/includes/footer.html"; ?>
+    <?php include "/srv/www/html/includes/cookie-consent.html"; ?>
+    <script nonce="<?php echo $GLOBALS['csp_nonce']; ?>">
+      "use strict";
+      document.getElementById("login").addEventListener("click", function() {
+        var response = grecaptcha.enterprise.getResponse(window.widgetId);
+        if (!response) { return; }
+        var login = createXHR();
+        var data = {
+          name: document.getElementById("loginid").textContent.replace(/&/g, "&amp;").replace(/'/g, "&apos;").replace(/"/g, "&quot;").replace(/</g, "&lt;").replace(/>/g, "&gt;").trim(),
+          captcha: response,
+          action: "LOGIN"
+        };
+
+        login.open("POST", "/login.html", true);
+        login.setRequestHeader("Content-Type", "application/json");
+
+        login.onload = function() { grecaptcha.reset(widgetId); };
+        login.send(JSON.stringify(data));
+      });
+    </script>
+  </body>
+</html>
+

@@ -1,0 +1,16 @@
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA512
+
+Contact: https://miikun95.net/contact-us/
+Expires: 2027-05-05T22:22:00.000+09:00
+Encryption: https://miikun95.net/pgp.asc
+Canonical: https://miikun95.net/.well-known/security.txt
+Preferred-Languages: ja
+-----BEGIN PGP SIGNATURE-----
+
+iLcEARMKAB0WIQQ7YcFHrzKiCqUrM3MpeEzaTUrfHgUCahGtYQAKCRApeEzaTUrf
+Hu3UAgib+Tr0gBQjCaPjgVcKrBi+TL2Ol9jeSyOLJHf5SYrfTt2NlUaQ0d77qtz2
+F60IVEnvv3j3aOrC0iVTggw9HUi99gIGKG1B/FCaflhxVqhkJuPXpPGDX65LUZdx
+vmHUK1BbWKk+dtYhn3ybz5UQ43P8r+2wCRHTDRemg4mALfcZzO3tSJI=
+=8ozs
+-----END PGP SIGNATURE-----

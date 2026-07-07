@@ -1,0 +1,188 @@
+<?php
+$recaptcha_act = 'VIEW_EMAIL';
+$query = '#get-email';
+$index = '0';
+include "/srv/www/html/includes/head1.html";
+?>
+    <meta name="description" content="MiikunWorld95のクッキーポリシーのぺージです。">
+    <meta name="keywords" content="miikun95">
+    <meta name="robots" content="noindex">
+    <title>プライバシー／Cookieポリシー｜MiikunWorld95</title>
+    <meta property="og:title" content="プライバシー／ポリシー｜MiikunWorld95">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://miikun95.net/privacy-and-cookie-policy/">
+    <meta property="og:image" content="https://miikun95.net/miikun95.png">
+<?php
+include "/srv/www/html/includes/head2.html";
+include "/srv/www/html/includes/06.html";
+?>
+    <link rel="canonical" href="https://miikun95.net/privacy-and-cookie-policy/">
+    <style nonce="<?php echo $GLOBALS['csp_nonce']; ?>">
+<?php include "/srv/www/html/includes/style.html"; ?>
+
+      #g-recaptcha {
+        width: 301px;
+        height: 75px;
+        overflow: hidden;
+        border: 1px solid #000000;
+        border-radius: 4px;
+        background-image: url("/miikun95-64.webp");
+        background-repeat: repeat;
+        background-size: 32px 32px;
+      }
+    </style>
+<?php include "/srv/www/html/includes/header.html"; ?>
+    <header>
+      <div class="marquee-container">
+        <div class="marquee"></div>
+      </div>
+    </header>
+    <hr>
+    <ol>
+      <li><a href="/" aria-label="トップページ">MiikunWorld95</a></li>
+      <li aria-current="page"><b aria-hidden="true">-&gt;&nbsp;</b><span>プライバシー／Cookieポリシー</span></li>
+    </ol>
+    <br>
+    <hr>
+    <main id="main">
+      <section>
+        <h2>プライバシー／Cookieポリシー</h2>
+        <p>MiikunWorld95（以下，「当ホームぺージ」といいます。）は，当ホームぺージ上で提供するサービス（以下,「本サービス」といいます。）における，ユーザーの個人情報の取扱いについて，以下のとおりプライバシーポリシー（以下，「本ポリシー」といいます。）を定めます。</p><br>
+        <hr>
+        <h3>第1条（個人情報の取得）</h3>
+        <p>当ホームページは，本サービスにおいて以下の情報を取得します。<br>
+        認証用データ： ユーザーが設定するログインIDおよびパスキー（WebAuthn）公開鍵。<br>
+        外部サービス連携による情報： GoogleおよびMicrosoft等の外部認証プロバイダーより提供される識別用ID。<br>
+        技術的情報： Cookie，IPアドレス，ブラウザの種類等のアクセスログ。<br>
+        注釈： パスキーによる生体認証（指紋・顔認証等）を利用する場合，当該データはユーザーのデバイス内でのみ処理され，当ホームページのサーバーに送信または保存されることはありません。<br></p>
+        <hr>
+        <h3>第2条（利用目的）</h3>
+        <p>本サービスのログイン認証および本人確認のため。<br>
+        アクセスカウンターの動作およびユーザー設定の保持のため。<br>
+        不正アクセスの防止およびセキュリティ維持のため。<br></p>
+        <hr>
+        <h3>第3条 Cookie（クッキー）について</h3>
+        <p>Cookieとは、お客様が当サイトを閲覧した際に、<br>
+        お客様のコンピューターやスマートフォンなどの機器に一時的に情報を保存する仕組みです。<br></p>
+        <hr>
+        <h4>a. Cookieの利用目的</h4>
+        <p>当ホームページでは，サービスの利便性向上およびセキュリティ確保のためにCookie（クッキー）を使用しています。<br></p>
+        <hr>
+        <br>
+        <h4>b. Cookieの拒否方法</h4>
+        <p>お客様は、お使いのブラウザの設定を変更することで、Cookieを無効にすることができます。<br>
+        ただし、Cookieを無効にした場合、<br>
+        当ホームぺージのアクセスカウンターが正常に動作しなくなる可能性がありますのでご注意ください。<br>
+        具体的な設定方法については、各ブラウザの公式サイトでご確認ください。<br></p>
+        <hr>
+        <h4>c. Cookie一覧</h4>
+        <dl>
+          <dt>クッキー名</dt>
+          <dd>__Host-SESSID</dd>
+          <dt>種類</dt>
+          <dd>セッションCookie</dd>
+          <dt>目的</dt>
+          <dd>ログイン状態の保持、アクセスカウンターが誤って繰り返しカウントアップするのを防ぐため。</dd>
+        </dl>
+        <hr>
+        <dl>
+          <dt>クッキー名</dt>
+          <dd>__Secure-CONSENT</dd>
+          <dt>種類</dt>
+          <dd>ファーストパーティCookie</dd>
+          <dt>目的</dt>
+          <dd>同意状態の保存</dd>
+        </dl>
+        <hr>
+        <dl>
+        <dl>
+          <dt>クッキー名</dt>
+          <dd>_GRECAPTCHA</dd>
+          <dt>種類</dt>
+          <dd>サードパーティCookie</dd>
+          <dt>目的</dt>
+          <dd>ボット等の不正アクセスからサイトを保護するための解析。</dd>
+          <dt>備考</dt>
+          <dd>Googleのプライバシーポリシーと利用規約が適用されます。</dd>
+        </dl>
+        <hr>
+        <h3>第4条（セキュリティおよびスパム対策）</h3>
+        <p>当ホームページは，スパム攻撃等の対策として「Google reCAPTCHA」および「Akismet」を利用しています。これに伴い，デバイス情報，IPアドレス，および投稿内容（名前，メールアドレス，コメント本文等）が各サービス提供者（Google LLC および Automattic Inc.）へ送信される場合があります。これらのデータは，各社のプライバシーポリシーおよび利用規約に基づき，スパム判定の目的でのみ管理されます。</p><br>
+        <a href="https://policies.google.com/privacy?hl=ja" target="_blank" rel="external noopener noreferrer">Googleプライバシーポリシー</a>
+        <a href="https://automattic.com/privacy/" target="_blank" rel="external noopener noreferrer">Automatticプライバシーポリシー(英語)</a>
+        <a href="https://translate.google.com/?hl=ja" target="_blank" rel="external noopener noreferrer">Google翻訳</a>
+        <hr>
+        <h3>第5条（個人情報の第三者提供および委託）</h3>
+        <p>当ホームページは，法令に基づく場合を除き，あらかじめユーザーの同意を得ることなく，第三者に情報を提示することはありません。ただし，前条に定めるスパム対策等の業務委託（外部サービスへのデータ送信）に必要な範囲で情報を提示する場合は，本条の第三者提供には該当しないものとします。</p><br>
+        <h3>第6条（ポリシーの変更）</h3>
+        <p>本ポリシーの内容は，法令その他本ポリシーに別段の定めのある事項を除いて，ユーザーに通知することなく変更することができるものとします。</p><br>
+        <hr>
+        <h3 id="contact">第7条（お問い合わせ窓口）</h3>
+        <p>本ポリシーに関するお問い合わせは，当ホームページ内の問い合わせフォーム，または以下のメールアドレスよりお願いいたします。 ※スパム対策として，Google reCAPTCHAによる認証後に連絡先を表示する仕組みを導入しています。</p>
+        <button type="button" id="get-email">メールアドレスを表示</button><br><br>
+        <div class="hidden" id="g-recaptcha"></div><br>
+        <input type="hidden" name="token" id="recaptcha-token" readonly>
+        <input type="hidden" name="action" value="<?php echo $recaptcha_act; ?>" readonly>
+        <div aria-live="polite" class="load">
+          <div role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" aria-labelledby="status-label" id="load-progress-bar" class="hidden"></div>
+          <p id="status-label" class="hidden">読込中...</p>
+          <div id="result"></div>
+        </div>
+        <h4>以上</h4>
+      </section>
+    </main>
+    <?php include "/srv/www/html/includes/footer.html"; ?>
+    <?php include "/srv/www/html/includes/cookie-consent.html"; ?>
+    <script nonce="<?php echo $GLOBALS['csp_nonce']; ?>">
+      window.verifyRequestXHR = function(t) {
+        if (t) {
+          document.getElementById("recaptcha-token").setAttribute("value", t);
+          document.getElementById("recaptcha-token").value = t;
+        }
+        var recaptcha = document.getElementById("g-recaptcha");
+        var getEmailBtn = document.getElementById("get-email");
+        var statusText = document.getElementById("status-label");
+        var loadProgressBar = document.getElementById("load-progress-bar");
+        var verify = createXHR();
+        recaptcha.setAttribute("class", "hidden");
+        getEmailBtn.setAttribute("class", "hidden");
+        loadProgressBar.setAttribute("class", "dl-progress-bar-show");
+        verify.open("POST", "/get-email.html", true);
+        verify.setRequestHeader("X-Requested-With", "XMLHttpRequest");
+        verify.setRequestHeader("X-reCAPTCHA-Token", t);
+        verify.setRequestHeader("X-reCAPTCHA-Action", "<?php echo $recaptcha_act; ?>");
+        verify.onloadstart = function() {
+          statusText.textContent = "通信中";
+          statusText.removeAttribute("class");
+        };
+        verify.onprogress = function(e) {
+          if (e.lengthComputable) { loadProgressBar.setAttribute("aria-valuenow", Math.floor((e.loaded / e.total) * 100)); }
+        }
+        verify.onload = function() {
+          grecaptcha.enterprise.reset(window.widgetId);
+          loadProgressBar.setAttribute("aria-valuenow", "100");
+          statusText.textContent = "完了！";
+          document.getElementById("result").innerHTML = verify.responseText;
+            setTimeout(function() {
+              loadProgressBar.setAttribute("aria-valuenow", "0");
+              setTimeout(function() {
+                loadProgressBar.removeAttribute("class");
+                statusText.setAttribute("class", "hidden");
+                setTimeout(function() {
+                  loadProgressBar.setAttribute("class", "hidden");
+                }, 400);
+              }, 50);
+            }, 600);
+        }
+        verify.onerror = function() {
+          loadProgressBar.setAttribute("class", "error");
+          loadProgressBar.setAttribute("aria-valuenow", "100");
+          setTimeout(function() {
+            statusText.setAttribute("class", "hidden");
+          }, 600);
+        };
+        verify.send();
+      }
+    </script>
+  </body>
+</html>

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl" href="/feed.xsl"?>
+<rss version="2.0">
+  <channel>
+    <title>MiikunLog95</title>
+    <link>https://blog.miikun95.net/</link>
+    <description></description>
+    <language>ja</language>
+    <copyright>(C) 2025-2026 miikun95</copyright>
+    <managingEditor>miikun95@miikun95.net (miikun95)</managingEditor>
+    <webMaster>miikun95@miikun95.net (miikun95)</webMaster>
+    <pubDate>2025-01-10T09:00:00+09:00</pubDate>
+    <lastBuildDate>2026-02-10T13:15:00+09:00</lastBuildDate>
+    <ttl>10</ttl>
+    <image>
+      <url>https://blog.miikun95.net/mw95-banner.png</url>
+      <title>MiikunLog95</title>
+      <link>https://blog.miikun95.net/</link>
+    </image>
+    <item>
+      <title>ブログ始めました</title>
+      <link>https://blog.miikun95.net/article/000001/</link>
+      <description>ブログ始めました</description>
+      <author>miikun95@miikun95.net (miikun95)</author>
+      <comments>https://blog.miikun95.net/article/000001/</comments>
+      <guid>{1c3561b4-ef7e-46c7-bd67-6531c75978bb}</guid>
+      <pubDate>2025-09-23T21:00:00+09:00</pubDate>
+    </item>
+  </channel>
+</rss>
+

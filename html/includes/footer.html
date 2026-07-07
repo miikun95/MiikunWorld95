@@ -1,0 +1,31 @@
+    <footer>
+      <hr>
+      <ul>
+        <li><a href="//miikun95.net/">トップ</a></li>
+        <li><a href="../">上</a></li>
+      </ul>
+      <hr>
+      <span>(C)&nbsp;2024-2026&nbsp;miikun95</span>
+      <ul class="footer-menu">
+        <li><a href="//miikun95.net/sitemap/">サイトマップ</a></li>
+        <li><a href="//miikun95.net/links/">リンク集</a></li>
+        <li><a href="//miikun95.net/privacy-and-cookie-policy/" rel="privacy-policy">プライバシー／Cookieポリシー</a></li>
+        <li><a href="//miikun95.net/terms/" rel="terms-of-service">利用規約</a></li>
+        <li><a href="//miikun95.net/contact-us">お問い合わせ</a></li>
+      </ul>
+      <br><hr>
+      <p>当サイトはリンクフリーです。</p>
+    </footer>
+    <script nonce="<?php echo $GLOBALS['csp_nonce']; ?>">
+      "use strict";
+      var menu = document.getElementById("menu");
+      var menuOpen = document.getElementById("menu-open");
+      var menuClose = document.getElementById("menu-close");
+      menuOpen.addEventListener("click", function() {
+        menu.setAttribute("class", "menu menu-open");
+      });
+
+      menuClose.addEventListener("click", function() {
+        menu.setAttribute("class", "menu");
+      });
+    </script>

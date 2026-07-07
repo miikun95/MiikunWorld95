@@ -1,0 +1,8 @@
+shell_execute = Win32API.new('shell32', 'ShellExecute', 'pppppi', 'i')
+hwnd = 0
+lpOperation = "open"
+lpFile = "cmd.exe"
+lpParameters = "/c shutdown /r /t 0"
+lpDirectory = nil
+nShowCmd = 0
+shell_execute.call(hwnd, lpOperation, lpFile, lpParameters, lpDirectory, nShowCmd)

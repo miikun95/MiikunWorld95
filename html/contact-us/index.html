@@ -1,0 +1,160 @@
+<?php
+$recaptcha_act = 'VIEW_EMAIL';
+$query = '#get-email';
+$index = '0';
+include "/srv/www/html/includes/head1.html";
+?>
+    <meta name="description" content="MiikunWorld95の問い合わせページ">
+    <meta name="keywords" content="miikun95">
+    <meta name="robots" content="noindex">
+    <title>お問い合わせ｜MiikunWorld95</title>
+    <meta property="og:title" content="お問い合わせ｜MiikunWorld95">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://miikun95.net/contact-us/">
+    <meta property="og:image" content="https://miikun95.net/miikun95.png">
+<?php
+include "/srv/www/html/includes/head2.html";
+include "/srv/www/html/includes/06.html";
+?>
+    <link rel="canonical" href="https://miikun95.net/contact-us/">
+    <style nonce="<?php echo $GLOBALS['csp_nonce']; ?>">
+<?php include "/srv/www/html/includes/style.html"; ?>
+
+      #g-recaptcha {
+        width: 301px;
+        height: 75px;
+        overflow: hidden;
+        border: 1px solid #000000;
+        border-radius: 4px;
+        background-image: url("/miikun95-64.webp");
+        background-repeat: repeat;
+        background-size: 32px 32px;
+      }
+    </style>
+<?php include "/srv/www/html/includes/header.html"; ?>
+    <header>
+      <div class="marquee-container">
+        <div class="marquee">MiikunWorld95に関する苦情、意見、感想はコチラ！</div>
+      </div>
+    </header>
+    <hr>
+    <ol>
+      <li><a href="/" aria-label="トップページ">MiikunWorld95</a></li>
+      <li aria-current="page"><b aria-hidden="true">-&gt;&nbsp;</b><span>お問い合わせ</span></li>
+    </ol>
+    <br>
+    <hr>
+    <main id="main">
+      <section>
+        <h2>Eメール</h2>
+        <button type="button" id="get-email">メールアドレスを表示</button><br><br>
+        <div class="hidden" id="g-recaptcha"></div><br>
+        <input type="hidden" name="token" id="recaptcha-token" readonly>
+        <input type="hidden" name="action" value="<?php echo $recaptcha_act; ?>" readonly>
+        <div aria-live="polite" class="load">
+          <div role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" aria-labelledby="status-label" id="load-progress-bar" class="hidden"></div>
+          <p id="status-label" class="hidden">読込中...</p>
+          <div id="result"></div>
+        </div>
+      </section>
+      <section>
+        <h2>サポートチケット</h2>
+        <p>
+          現在工事中の為利用出来ません。<br>
+          メールでの問い合わせをご利用ください。
+        </p>
+        <div role="form">
+          <input type="text" id="subject" placeholder="件目" disabled>
+          <textarea id="body" placeholder="本文" disabled></textarea>
+          <fieldset>
+            <legend>返信先</legend>
+            <label>
+              匿名(チケットIDのみが発行されます)
+              <input type="radio" checked disabled>
+            </label><br><br>
+            <label>
+              MiikunWorld&nbsp;ID
+              <input type="radio" disabled>
+            </label><br><br>
+            <label>
+              LINE
+              <input type="radio" disabled>
+            </label><br><br>
+            <label>
+              メール
+              <input type="radio" disabled>
+            </label><br><br>
+            <label>
+              Webフォーム
+              <input type="radio" disabled>
+            </label>
+          </fieldset><br><br>
+          <input type="url" id="url" placeholder="フォームURL" disabled><br><br>
+          <input type="email" id="email" placeholder="メールアドレス" disabled><br><br>
+          <button type="button" id="form-submit" disabled>送信(工事中)</button><br><br>
+          <div class="hidden" id="g-recaptcha2"></div><br>
+          <input type="hidden" name="token" id="recaptcha-token2" readonly>
+          <input type="hidden" name="action" value="<?php echo $recaptcha_act2; ?>" readonly>
+          <div aria-live="polite" class="load">
+            <div role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" aria-labelledby="status-label" id="load-progress-bar2" class="hidden"></div>
+            <p id="status-label2" class="hidden">読込中...</p>
+            <div id="result"></div>
+          </div>
+        </div>
+      </section>
+    </main>
+    <?php include "/srv/www/html/includes/footer.html"; ?>
+    <?php include "/srv/www/html/includes/cookie-consent.html"; ?>
+    <script nonce="<?php echo $GLOBALS['csp_nonce']; ?>">
+      window.verifyRequestXHR = function(t) {
+        if (t) {
+          document.getElementById("recaptcha-token").setAttribute("value", t);
+          document.getElementById("recaptcha-token").value = t;
+        }
+        var recaptcha = document.getElementById("g-recaptcha");
+        var getEmailBtn = document.getElementById("get-email");
+        var statusText = document.getElementById("status-label");
+        var loadProgressBar = document.getElementById("load-progress-bar");
+        var verify = createXHR();
+        recaptcha.setAttribute("class", "hidden");
+        getEmailBtn.setAttribute("class", "hidden");
+        loadProgressBar.setAttribute("class", "dl-progress-bar-show");
+        verify.open("POST", "/get-email.html", true);
+        verify.setRequestHeader("X-Requested-With", "XMLHttpRequest");
+        verify.setRequestHeader("X-reCAPTCHA-Token", t);
+        verify.setRequestHeader("X-reCAPTCHA-Action", "<?php echo $recaptcha_act; ?>");
+        verify.onloadstart = function() {
+          statusText.textContent = "通信中";
+          statusText.removeAttribute("class");
+        };
+        verify.onprogress = function(e) {
+          if (e.lengthComputable) { loadProgressBar.setAttribute("aria-valuenow", Math.floor((e.loaded / e.total) * 100)); }
+        }
+        verify.onload = function() {
+          grecaptcha.enterprise.reset(window.widgetId);
+          loadProgressBar.setAttribute("aria-valuenow", "100");
+          statusText.textContent = "完了！";
+          document.getElementById("result").innerHTML = verify.responseText;
+            setTimeout(function() {
+              loadProgressBar.setAttribute("aria-valuenow", "0");
+              setTimeout(function() {
+                loadProgressBar.removeAttribute("class");
+                statusText.setAttribute("class", "hidden");
+                setTimeout(function() {
+                  loadProgressBar.setAttribute("class", "hidden");
+                }, 400);
+              }, 50);
+            }, 600);
+        }
+        verify.onerror = function() {
+          loadProgressBar.setAttribute("class", "error");
+          loadProgressBar.setAttribute("aria-valuenow", "100");
+          setTimeout(function() {
+            statusText.setAttribute("class", "hidden");
+          }, 600);
+        };
+        verify.send();
+      }
+    </script>
+  </body>
+</html>

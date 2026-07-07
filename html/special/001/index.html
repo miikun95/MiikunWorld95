@@ -1,0 +1,245 @@
+<?php include "/srv/www/html/includes/head1.html"; ?>
+    <meta name="description" content="ミーくんが暴れるだけです！">
+    <meta name="keywords" content="miikun95">
+    <title>ミーくんの暴走｜MiikunWorld95</title>
+    <meta property="og:title" content="ミーくんの暴走｜MiikunWorld95">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://miikun95.net/special/001/">
+    <meta property="og:image" content="https://miikun95.net/miikun95.png">
+<?php include "/srv/www/html/includes/head2.html"; ?>
+    <link rel="canonical" href="https://miikun95.net/special/001/">
+    <style nonce="<?php echo $GLOBALS['csp_nonce']; ?>">
+<?php include "/srv/www/html/includes/style.html"; ?>
+
+      #game-container {
+        position: relative;
+        border: 3px solid #000000;
+        width: 95vw;
+        aspect-ratio: 16 / 9;
+        overflow: hidden;
+      }
+
+.progressbar-container {
+    display: flex;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 10000;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+canvas {
+  display: block
+  width: 100%;
+  height: 100%;
+}
+
+#title-screen {
+    display: flex;
+    position: absolute;
+    background-color: #81A1D6;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 10000;
+    flex-direction: column;
+    align-items: left;
+    justify-content: left;
+    transform-origin: left;
+    transition: transform linear 0.8s;
+  }
+
+#title-screen p {
+  font-weight: bold;
+  font-style: italic;
+  font-size: xxx-large;
+  transform-origin: left;
+  transition: transform linear 0.8s;
+}
+
+      #start, #option {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 150px;
+  height: 30px;
+  background-color: rgba(255, 255, 255, 0.5);
+  margin: 5px 10px;
+  font-size: large;
+  appearance: none;
+  transform-origin: left;
+  transition: transform linear 0.8s;
+      }
+      .left-slide-out {  transform: translateX(-100%); }
+      .top-slide-out { transform: translateY(-100%); }
+    </style>
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      "name": "ミーくんの暴走",
+      "url": "https://miikun95.net/special/001/",
+      "itemListElement": [{
+        "@type": "ListItem",
+        "position": 1,
+        "name": "ミーくんの暴走",
+        "item": {
+          "@type": "Thing",
+          "@id": "https://miikun95.net/special/001/"
+        }
+      }]
+    }
+    </script>
+<?php include "/srv/www/html/includes/header.html"; ?>
+    <header>
+      <div class="marquee-container">
+        <div class="marquee"></div>
+      </div>
+    </header>
+    <hr>
+    <ol>
+      <li><a href="/" aria-label="トップページ">MiikunWorld95</a></li>
+      <li aria-current="page"><b aria-hidden="true">-&gt;&nbsp;</b><span>ミーくんの暴走</span></li>
+    </ol>
+    <br>
+    <hr>
+    <main id="main">
+      <section>
+        <h2>ミーくんの暴走</h2>
+    <div id="game-container">
+      <div id="title-screen">
+        <p>ミーくん</p>
+        <button type="button" id="start">スタート</button>
+        <div class="progressbar-container">
+          <div role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" id="progress-bar" class="invisible"></div>
+        </div>
+      </div>
+      <canvas width="1920" height="1080">このブラウザはCanvasに対応していません</canvas>
+    </div>
+    <fieldset>
+      <legend>飾りボタン　機能しません（笑）</legend>
+      <button type="button" id="left">左</button>
+      <button type="button" id="down">下</button>
+      <button type="button" id="up">上</button>
+      <button type="button" id="right">右</button>
+      <button type="button" id="miikun">？</button>
+    </fieldset>
+      <script nonce="<?php echo $GLOBALS['csp_nonce']; ?>">
+      "use strict";
+      document.getElementById("start").addEventListener("click", function(e) {
+        e.currentTarget.blur();
+        var canvas = document.querySelector("canvas");
+        var ctx = document.querySelector("canvas").getContext("2d");
+        var keyPress = [false, false, false];
+        ctx.font = "128px sans-serif";
+        var resources = [];
+        var dlCount = 0;
+        [
+          "/miikun95-128.png"
+        ].forEach(function(url, i, a) {
+          var dl = new createXHR();
+          dl.open("GET", url, true);
+          dl.responseType = "blob";
+          dl.onloadstart = function() {
+            document.getElementById("start").setAttribute("class", "left-slide-out");
+            document.querySelector("#title-screen p").setAttribute("class", "left-slide-out");
+          }
+          dl.onprogress = function(e) {
+            if (e.lengthComputable) {
+              document.querySelector("[role=progressbar]").removeAttribute("class");
+              document.querySelector("[role=progressbar]").setAttribute("aria-valuenow", Math.floor((e.loaded / e.total) * 100));
+            }
+          };
+          dl.onload = function() {
+            if (this.status === 200) {
+              dlCount++;
+              var img = new Image();
+              img.src = window.URL.createObjectURL(this.response);
+              img.onload = function() {
+                resources[i] = img;
+                if (dlCount === (a.length)) {
+                  document.getElementById("title-screen").setAttribute("class", "top-slide-out");
+                  start();
+                }
+              };
+            }
+          };
+          dl.send();
+        }, { once: true });
+        class Miikun {
+          constructor() {
+            this.x = 20;
+            this.y = 800;
+            this.status = 0;
+            this.jumpCount = 0; 
+          }
+          paint() {
+            ctx.drawImage(resources[0], this.x, this.y, 128, 128);
+          }
+        }
+        function start() {
+          var miikun = new Miikun();
+          var miikun2 = new Miikun();
+          window.addEventListener("keydown", function(e) {
+            if (e.key == "w") { keyPress[0] = true; }
+            if (e.key == "a") { keyPress[1] = true; }
+            if (e.key == "s") { keyPress[2] = true; }
+            if (e.key == "d") { keyPress[3] = true; }
+            if (e.key == " ") { keyPress[4] = true; }
+          });
+          window.addEventListener("keyup", function(e) {
+            if (e.key == "w") { keyPress[0] = false; }
+            if (e.key == "a") { keyPress[1] = false; }
+            if (e.key == "s") { keyPress[2] = false; }
+            if (e.key == "d") { keyPress[3] = false; }
+            if (e.key == " ") { keyPress[4] = false; }
+          });
+          var intervalID = setInterval(function() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            var m2 = Math.floor(Math.random() * 100);
+            var n2 = Math.floor(Math.random() * 80);
+            if (n2 > 0) {
+              if (m2 < 25) {
+                if (miikun2.y > 0) miikun2.y -= 15;
+              } else if (m2 < 50) {
+                if (miikun2.y < 950) miikun2.y += 15;
+              } else if (m2 < 75) {
+                if (miikun2.x > 0) miikun2.x -= 15;
+              } else {
+                if (miikun2.x < 1800) miikun2.x += 15;
+              }
+            }
+            var m = Math.floor(Math.random() * 100);
+            var n = Math.floor(Math.random() * 80);
+            if (n > 0) {
+              if (m < 25) {
+                if (miikun.y > 0) miikun.y -= 15;
+              } else if (m < 50) {
+                if (miikun.y < 950) miikun.y += 15;
+              } else if (m < 75) {
+                if (miikun.x > 0) miikun.x -= 15;
+              } else {
+                if (miikun.x < 1800) miikun.x += 15;
+              }
+            }
+            if (keyPress[0] === true && miikun.y > 0) { miikun.y = miikun.y - 5; }
+            if (keyPress[1] === true && miikun.x > 0) { miikun.x = miikun.x - 5; }
+            if (keyPress[2] === true && miikun.y < 950) { miikun.y = miikun.y + 5; }
+            if (keyPress[3] === true && miikun.x < 1800) { miikun.x = miikun.x + 5; }
+            miikun.paint();
+            miikun2.paint();
+          }, 10);
+        }
+      });
+        </script>
+      </section>
+    </main>
+<?php include "/srv/www/html/includes/footer.html"; ?>
+<?php include "/srv/www/html/includes/cookie-consent.html"; ?>
+  </body>
+</html>
+

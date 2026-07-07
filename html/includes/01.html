@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="ja" xml:lang="ja" dir="ltr" prefix="og: https://ogp.me/ns#">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="color-scheme" content="only light">
+    <meta name="author" content="miikun95">
+    <meta name="theme-color" content="#FFFFFF">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:site" content="@miikun95">
+    <meta name="twitter:creator" content="@miikun95">
+    <meta name="description" content="<?php echo $descr; ?>">
+    <meta name="keywords" content="<?php echo $keywd; ?>">
+    <title><?php echo $title; ?></title>
+    <meta property="og:title" content="<?php echo $title; ?>">
+    <meta property="og:description" content="<?php echo $descr; ?>">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="<?php echo $url; ?>">
+    <meta property="og:site_name" content="MiikunWorld95">
+    <meta property="fb:app_id" content="1751728526198582">
+    <link rel="manifest" href="/manifest.webmanifest" crossorigin="use-credentials">
+    <link rel="icon" href="/favicon.ico">
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+    <link rel="apple-touch-icon-precomposed" href="/apple-touch-icon-precomposed.png">
+    <link rel="privacy-policy" href="/privacy-policy/">
+    <link rel="terms-of-service" href="/terms/">
+    <link rel="preload" href="/style.css" as="style">
+    <link rel="stylesheet" href="/style.css" media="print" id="stylesheet" integrity="<?php echo $GLOBALS['integrity01']; ?>">
+    <script nonce="<?php echo $GLOBALS['csp_nonce']; ?>">
+      "use strict";
+      var stylesheet = document.getElementById("stylesheet");
+      stylesheet.addEventListener("load", function() {
+        stylesheet.setAttribute("media", "all");
+      });
+    </script>
+    <noscript>
+      <link rel="stylesheet" href="/style.css" blocking="render">
+    </noscript>
+    <script nonce="<?php echo $GLOBALS['csp_nonce']; ?>">
+      function createXHR() {
+        if (window.XMLHttpRequest) {
+          return new XMLHttpRequest();
+        } else if (window.ActiveXObject) {
+          try {
+            return new ActiveXObject("Msxml2.XMLHTTP");
+          } catch (e) {
+            try {
+              return new ActiveXObject("Microsoft.XMLHTTP");
+            } catch (e) {
+              return null;
+            }
+          }
+        }
+        return null;
+      }
+    </script>
+    <link rel="canonical" href="<?php echo $url; ?>">
