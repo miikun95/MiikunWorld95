@@ -128,7 +128,7 @@ canvas {
       <button type="button" id="right">右</button>
       <button type="button" id="miikun">？</button>
     </fieldset>
-      <script nonce="<?php echo $GLOBALS['csp_nonce']; ?>">
+      <script nonce="<?php echo $GLOBALS['csp_nonce']; ?>" type="module">
       "use strict";
       document.getElementById("start").addEventListener("click", function(e) {
         e.currentTarget.blur();
@@ -235,6 +235,10 @@ canvas {
           }, 10);
         }
       });
+        </script>
+        <script nonce="<?php echo $GLOBALS['csp_nonce']; ?>" nomodule>
+          "use strict";
+          alert("IE11は可能な限り対応していますが、仕様上classメソッドはどうにも出来ないので非対応ですご了承ください。";
         </script>
       </section>
     </main>
