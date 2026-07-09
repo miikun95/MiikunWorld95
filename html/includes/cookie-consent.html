@@ -62,7 +62,6 @@
           if (s !== -1) {
             var i = c.indexOf(";", s);
             if (i === -1) { i = c.length; }
-            return decodeURIComponent(c.substring(s + n.length, i));
             var r = decodeURIComponent(c.substring(s + n.length, i));
             return (r.length > 0) ? r : null;
           } else { return null; }
