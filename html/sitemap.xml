@@ -22,7 +22,7 @@
     <priority>0.1</priority>
   </url>
   <url>
-    <loc>https://miikun95.net/download-center/detail/000001/</loc>
+    <loc>https://miikun95.net/download-center/detail/miikun-mod/</loc>
     <lastmod>2025-10-02T22:56:00+09:00</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.1</priority>
@@ -34,25 +34,25 @@
     <priority>0.1</priority>
   </url>
   <url>
-    <loc>https://miikun95.net/tools/001/</loc>
+    <loc>https://miikun95.net/tools/ip/</loc>
     <lastmod>2026-01-05T11:03:00+09:00</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.1</priority>
   </url>
   <url>
-    <loc>https://miikun95.net/tools/002/</loc>
+    <loc>https://miikun95.net/tools/base64/</loc>
     <lastmod>2026-03-16T19:54:00+09:00</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.1</priority>
   </url>
   <url>
-    <loc>https://miikun95.net/tools/003/</loc>
+    <loc>https://miikun95.net/tools/posix-time/</loc>
     <lastmod>2026-03-16T19:54:00+09:00</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.1</priority>
   </url>
   <url>
-    <loc>https://miikun95.net/privacy-and-cookie-policy/</loc>
+    <loc>https://miikun95.net/privacy-policy/</loc>
     <lastmod>2025-01-21T13:29:00+09:00</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.1</priority>

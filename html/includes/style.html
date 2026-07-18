@@ -262,8 +262,11 @@
        line-gap-override: 0%;
        unicode-range: U+4E0E, U+4E21;
      }
+      * {
+        color: #000000;
+        font-family: "Noto Sans JP", sans-serif;
+      }
       body { background-color: #FFFFFF; }
-      * { font-family: "Noto Sans JP", sans-serif; }
       .title { text-align: center; }
       .skip-link {
         display: block;
@@ -334,12 +337,14 @@
         align-items: center; 
       }
       h1 {
+        background-color: transparent;
         font-size: 1rem;
         white-space: nowrap;
         flex-shrink: 0;
         margin: 0;
       }
       a {
+        background-color: transparent;
         color: #000000;
         text-decoration: none;
       }
@@ -347,17 +352,15 @@
         background-color: transparent;
         border: none;
       }
-      ul li {
-        display: inline-block;
-        vertical-align: middle;
-        margin-bottom: 16px;
-      }
       .menu {
         white-space: nowrap;
         overflow: auto;
       }
       li {
+        background-color: transparent;
         display: inline-block;
+        vertical-align: middle;
+        margin-bottom: 16px;
         list-style: none;
         margin-right: 5px;
       }
@@ -373,12 +376,12 @@
       }
       a, button:not(.gsi-material-button), [role=radio] {
         color: #000000;
-        backgroud-color: #FFFFFF;
         border: 3px ridge #000000;
         padding: 2px;
         text-decoration: none;
         font-weight: bold;
       }
+      button:not(.gsi-material-button), [role=radio] { background-color: #FFFFFF; }
       disabled, button:disabled:not(.gsi-material-button) {
         color: #707070;
         backgroud-color: #FFFFFF;
@@ -404,7 +407,6 @@
         height: 20px;
         overflow: hidden;
         border: 1px solid #000000;
-        color: #7CFC00;
         background-color: #000000;
       }
       .marquee {
@@ -413,6 +415,8 @@
         padding-left: 100%;
         white-space: nowrap;
         animation: marquee 10s linear infinite;
+        color: #7CFC00;
+        background-color: transparent;
       }
       .mobile { display: none; }
       input, textarea, button { appearance:none; }
