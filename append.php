@@ -1,1 +1,1 @@
-<!-- <?php echo $random_string = base64_encode(random_bytes(random_int(1, 256))); ?> -->
+<?php $host = $_SERVER['HTTP_HOST'] ?? ''; $uri  = $_SERVER['REQUEST_URI'] ?? ''; $is_ip_check = (strpos($host, 'v4.ip.') !== false || strpos($host, 'v6.ip.') !== false || strpos($host, 'ip.m95.world') !== false || strpos($uri, '/ipcheck/') !== false); if (!$is_ip_check) { ?><!-- <?php echo $random_string = base64_encode(random_bytes(random_int(1, 256))); ?> --><?php } ?>

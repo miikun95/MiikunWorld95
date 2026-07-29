@@ -1,6 +1,6 @@
 <?php
 $nonce = base64_encode(random_bytes(16));
-header("Content-Security-Policy: default-src 'none'; style-src 'self' 'unsafe-inline' 'nonce-$nonce'; script-src 'self' 'unsafe-inline' https://www.recaptcha.net 'nonce-$nonce' 'strict-dynamic'; img-src 'self' blob: data: https://www.recaptcha.net https://www.gstatic.com; media-src 'self'; frame-src 'self' https://www.recaptcha.net https://www.gstatic.com; manifest-src 'self'; connect-src 'self' https://www.recaptcha.net; font-src 'self'; form-action 'self' https://accounts.google.com; frame-ancestors 'self' https://www.recaptcha.net; base-uri 'none'; require-trusted-types-for 'script'; trusted-types default goog#html; upgrade-insecure-requests;");
+header("Content-Security-Policy: default-src 'none'; style-src 'self' 'unsafe-inline' 'nonce-$nonce'; script-src 'self' 'unsafe-inline' https://www.recaptcha.net 'nonce-$nonce' 'strict-dynamic'; img-src 'self' blob: data: https://www.recaptcha.net https://www.gstatic.com; media-src 'self'; frame-src 'self' https://www.recaptcha.net https://www.gstatic.com; manifest-src 'self'; connect-src 'self' https://v4.ip.miikun95.net https://v6.ip.miikun95.net https://www.recaptcha.net; font-src 'self'; form-action 'self' https://accounts.google.com; frame-ancestors 'self'; base-uri 'none'; require-trusted-types-for 'script'; trusted-types default goog#html; upgrade-insecure-requests;");
 $GLOBALS['csp_nonce'] = $nonce;
 $GLOBALS['integrity01'] = 'sha384-' . base64_encode(hash_file('sha384', '/srv/www/html/style.css', true));
 $GLOBALS['redis'] = new Redis();

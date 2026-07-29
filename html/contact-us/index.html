@@ -49,8 +49,8 @@ include "/srv/www/html/includes/06.html";
         <h2>Eメール</h2>
         <button type="button" id="get-email">メールアドレスを表示</button><br><br>
         <div class="hidden" id="g-recaptcha"></div><br>
-        <input type="hidden" name="token" id="recaptcha-token" readonly>
-        <input type="hidden" name="action" value="<?php echo $recaptcha_act; ?>" readonly>
+        <input type="hidden" name="token" id="recaptcha-token">
+        <input type="hidden" name="action" value="<?php echo $recaptcha_act; ?>">
         <div aria-live="polite" class="load">
           <div role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" aria-labelledby="status-label" id="load-progress-bar" class="hidden"></div>
           <p id="status-label" class="hidden">読込中...</p>
@@ -93,8 +93,8 @@ include "/srv/www/html/includes/06.html";
           <input type="email" id="email" placeholder="メールアドレス" disabled><br><br>
           <button type="button" id="form-submit" disabled>送信(工事中)</button><br><br>
           <div class="hidden" id="g-recaptcha2"></div><br>
-          <input type="hidden" name="token" id="recaptcha-token2" readonly>
-          <input type="hidden" name="action" value="<?php echo $recaptcha_act2; ?>" readonly>
+          <input type="hidden" name="token" id="recaptcha-token2">
+          <input type="hidden" name="action" value="<?php echo $recaptcha_act2; ?>">
           <div aria-live="polite" class="load">
             <div role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" aria-labelledby="status-label" id="load-progress-bar2" class="hidden"></div>
             <p id="status-label2" class="hidden">読込中...</p>

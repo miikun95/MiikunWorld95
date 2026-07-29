@@ -95,7 +95,6 @@ include "/srv/www/html/includes/06.html";
         </dl>
         <hr>
         <dl>
-        <dl>
           <dt>クッキー名</dt>
           <dd>_GRECAPTCHA</dd>
           <dt>種類</dt>
@@ -121,8 +120,8 @@ include "/srv/www/html/includes/06.html";
         <p>本ポリシーに関するお問い合わせは，当ホームページ内の問い合わせフォーム，または以下のメールアドレスよりお願いいたします。 ※スパム対策として，Google reCAPTCHAによる認証後に連絡先を表示する仕組みを導入しています。</p>
         <button type="button" id="get-email">メールアドレスを表示</button><br><br>
         <div class="hidden" id="g-recaptcha"></div><br>
-        <input type="hidden" name="token" id="recaptcha-token" readonly>
-        <input type="hidden" name="action" value="<?php echo $recaptcha_act; ?>" readonly>
+        <input type="hidden" name="token" id="recaptcha-token">
+        <input type="hidden" name="action" value="<?php echo $recaptcha_act; ?>">
         <div aria-live="polite" class="load">
           <div role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" aria-labelledby="status-label" id="load-progress-bar" class="hidden"></div>
           <p id="status-label" class="hidden">読込中...</p>
