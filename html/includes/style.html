@@ -1,3 +1,4 @@
+/* vim: set filetype=css : */
      @font-face {
        font-family: "Noto Sans JP";
        src: url("/resources/noto-sans-jp-0.eot");
@@ -267,6 +268,8 @@
         font-family: "Noto Sans JP", sans-serif;
       }
       body { background-color: #FFFFFF; }
+      .no-border { border: none !important; }
+      .right .no-border { margin-right: 15px; }
       .title { text-align: center; }
       .skip-link {
         display: block;
@@ -368,6 +371,24 @@
         margin-top: 150px;
         justify-content: flex-end;
       }
+      .modal-bg {
+        display: flex;
+        position: fixed;
+        justify-content: center;
+        align-items: center;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100dvh;
+        background-color: rgba(0, 0, 0, 0.5);
+        z-index: 2147483646;
+      }
+      .modal {
+        background-color: #FFFFFF;
+        border: 5px ridge #000000;
+        padding: 20px;
+        z-index: 2147483647;
+      }
       .access-counter-container {
         position: relative;
         text-align: center;
@@ -419,7 +440,7 @@
       }
       .mobile { display: none; }
       input, textarea, button { appearance:none; }
-      [type=text], [type=number], [type=password], [type=datetime-local], textarea {
+      [type=text], [type=number], [type=password], [type=url], [type=datetime-local], textarea {
         margin: 5px;
         border: 3px groove #000000;
         width: 85vw;

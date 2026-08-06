@@ -1,7 +1,6 @@
 {
-  "$schema": "https://json.schemastore.org/web-manifest-combined.json",
   "name": "MiikunWorld95",
-  "short_name": "M.W.95",
+  "short_name": "MW95",
   "description": "MiikunWorld95では、様々なコンテンツを投稿しています",
   "id": "https://miikun95.net/",
   "lang": "ja",
@@ -9,10 +8,18 @@
   "orientation": "any",
   "start_url": "/",
   "scope": "/",
-  "display": "browser",
-  "theme_color": "#CCCCCC",
-  "background_color": "#CCCCCC",
-  "prefer_related_applications": false,
+  "display": "standalone",
+  "display_override": ["window-controls-overlay", "tabbed", "standalone", "fullscreen", "minimal-ui", "browser"],
+  "theme_color": "#A7D474",
+  "background_color": "#FFFFFF",
+  "prefer_related_applications": true,
+  "related_applications": [
+    {
+      "platform": "miikunworld95",
+      "url": "https://miikun95.net/download-center/miikunworld95/",
+      "id": "net.miikun95.miikunworld95"
+    }
+  ],
   "icons": [
     {
       "src": "/miikun95-64.png",
@@ -35,14 +42,26 @@
       "type": "image/png"
     },
     {
-      "src": "/miikun95.png",
+      "src": "/miikun95-512.png",
       "sizes": "512x512",
       "type": "image/png"
     }
   ],
+  "edge_side_panel": {
+    "preferred_width": 400
+  },
   "splash_screen": {
     "src": "/apple-touch-icon.png",
     "sizes": "512x512",
     "background_color": "#FFFFFF"
-  }
+  },
+  "screenshots": [
+    {
+      "src": "/ss-top-sp.png",
+      "sizes": "1080x2520",
+      "type": "image/png",
+      "form_factor": "narrow",
+      "label": "MiikunWorld95トップページ"
+    }
+  ]
 }

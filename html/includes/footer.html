@@ -30,3 +30,8 @@
         menu.setAttribute("class", "menu");
       });
     </script>
+    <script type="module" nonce="<?php echo $GLOBALS['csp_nonce']; ?>">
+      if (typeof navigator.serviceWorker !== "undefined") {
+        navigator.serviceWorker.register("/sw.js")
+      }
+    </script>

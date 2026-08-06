@@ -1,4 +1,11 @@
-<?php                                        $state = base64_encode(random_bytes(32));  $_SESSION['oauth_state'] = $state;       ?>
+<?php
+  http_response_code(503);
+  $state = base64_encode(random_bytes(32));
+  $_SESSION['oauth_state'] = $state;
+  $recaptcha_act = 'LOGIN';
+  $query = 'label';
+  $index = '0';
+?>
 <?php include "/srv/www/html/includes/head1.html" ?>
     <meta name="description" content="MiikunWorld ID">
     <meta name="keywords" content="miikun95">
@@ -10,39 +17,7 @@
     <meta property="og:site_name" content="MiikunWorld ID">
 <?php include "/srv/www/html/includes/head2.html" ?>
     <link rel="canonical" href="https://miikun95.net/login/">
-    <script nonce="48xccMurSqpuoNUX3r2bW0xwxU3eSsCyzOH7G5tWiVQd+1vkOQ8DVlEyYgR8q7ad">
-      "use strict";
-      if (window.trustedTypes && window.trustedTypes.createPolicy) {
-        if (!window.trustedTypes.defaultPolicy) {
-          window.trustedTypes.createPolicy('default', {
-            createScriptURL: function(url) {
-              var s = String(url);
-              if (
-                s.indexOf("https://www.recaptcha.net/") === 0 ||
-                s.indexOf("https://recaptcha.net/") === 0 ||
-                s.indexOf("https://www.gstatic.com/") === 0
-              ) {
-                return s;
-              }
-              return null; 
-            }
-          });
-        }
-      }
-
-      window.onloadCallback = function() {
-        document.getElementById("loginid").addEventListener("click", function() {
-          window.widgetId = grecaptcha.enterprise.render("g-recaptcha", {
-            "sitekey": "6LeFveMrAAAAAFtiEsCxo4juadGjNTfUO-QHNtRH",
-            "theme": "light",
-            "size": "normal",
-            "tabindex": "0",
-            "action": "LOGIN"
-          });
-        }, { once: true });
-      }
-    </script>
-    <script src="https://www.recaptcha.net/recaptcha/enterprise.js?onload=onloadCallback&render=explicit&hl=ja" nonce="48xccMurSqpuoNUX3r2bW0xwxU3eSsCyzOH7G5tWiVQd+1vkOQ8DVlEyYgR8q7ad" async defer></script>
+<?php include '/srv/www/html/includes/06.html'; ?>
     <style nonce="<?php echo $GLOBALS['csp_nonce']; ?>">
 <?php include "/srv/www/html/includes/style.html" ?>
 
@@ -95,16 +70,23 @@
     <main id="main">
       <section>
         <h2>ユーザーログイン</h2>
-        <div role="form">
-          <div id="loginid-label">ログインID</div>
-          <div role="textbox" id="loginid" contenteditable="true" aria-placeholder="ログインID" aria-multiline="false" aria-required="true" tabindex="0" aria-labelledby="loginid-label"></div><br>
-          <div id="g-recaptcha">
+        <form>
+          <label>
+            ログインID
+            <input type="text" name="loginid" placeholder="ログインID" autocomplete="username" required disabled><br>
+          </label>
+          <input type="hidden" name="token" id="recaptcha-token" readonly>
+          <input type="hidden" name="action" value="<?php echo $recaptcha_act; ?>" readonly>
+          <div id="g-recaptcha" class="hidden"></div>
+          <div aria-live="polite" class="load">
+            <div role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" aria-labelledby="status-label" id="load-progress-bar" class="hidden"></div>
+            <p id="status-label" class="hidden">読込中...</p>
           </div>
           <br>
-          <button type="button" id="login" disabled>ログイン</button><br><br>
-          <a href="/register/">アカウントを持っていません</a><br><br>
-          <a href="//miikun95.net/">MiikunWorld95に戻る</a>
-        </div>
+          <button id="login" disabled>ログイン</button><br><br>
+        </form>
+        <a href="/register/">アカウントを持っていません</a><br><br>
+        <a href="//miikun95.net/">MiikunWorld95に戻る</a>
         <hr>
         <h2>外部アカウントでログイン</h2>
         <button type="button" class="gsi-material-button" id="g-login" disabled>
@@ -197,6 +179,6 @@
         login.send(JSON.stringify(data));
       });
     </script>
+<?php include "/srv/www/html/includes/under-construction.html" ?>
   </body>
 </html>
-

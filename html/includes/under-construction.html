@@ -1,0 +1,12 @@
+    <div class="modal-bg">
+      <div class="modal">
+        <strong>工事中</strong>
+        <p>現在工事中の為ご利用になれません</p>
+        <a href="//miikun95.net/">トップページ</a>
+        <button type="button" id="back">戻る</button>
+      </div>
+    </div>
+    <script nonce="<?php echo $GLOBALS['csp_nonce']; ?>">
+      "use strict";
+      document.getElementById("back").addEventListener("click", function() { history.back() });
+    </script>

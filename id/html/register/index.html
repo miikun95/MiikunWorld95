@@ -1,8 +1,12 @@
 <?php
+  http_response_code(503);
   $state = base64_encode(random_bytes(32));
   $_SESSION['oauth_state'] = $state;
+  $recaptcha_act = 'REGISTRATION';
+  $query = 'label';
+  $index = '0';
+  include "/srv/www/html/includes/head1.html"
 ?>
-<?php include "/srv/www/html/includes/head1.html" ?>
     <meta name="description" content="MiikunWorld ID">
     <meta name="keywords" content="miikun95">
     <title>MiikunWorld ID</title>
@@ -13,38 +17,7 @@
     <meta property="og:site_name" content="MiikunWorld ID">
 <?php include "/srv/www/html/includes/head2.html" ?>
     <link rel="canonical" href="https://miikun95.net/profile/">
-    <script nonce="<?php echo $GLOBALS['csp_nonce']; ?>">
-      "use strict";
-      if (window.trustedTypes && window.trustedTypes.createPolicy) {
-        if (!window.trustedTypes.defaultPolicy) {
-          window.trustedTypes.createPolicy('default', {
-            createScriptURL: function(url) {
-              var s = String(url);
-              if (
-                s.indexOf("https://www.recaptcha.net/") === 0 ||
-                s.indexOf("https://www.gstatic.com/") === 0
-              ) {
-                return s;
-              }
-              return null; 
-            }
-          });
-        }
-      }
-
-      window.onloadCallback = function() {
-        document.getElementById("username").addEventListener("click", function() {
-          window.widgetId = grecaptcha.enterprise.render("g-recaptcha", {
-            "sitekey": "6LeFveMrAAAAAFtiEsCxo4juadGjNTfUO-QHNtRH",
-            "theme": "light",
-            "size": "normal",
-            "tabindex": "0",
-            "action": "REGISTRATION"
-          });
-        }, { once: true });
-      }
-    </script>
-    <script src="https://www.recaptcha.net/recaptcha/enterprise.js?onload=onloadCallback&render=explicit&hl=ja" nonce="<?php echo $GLOBALS['csp_nonce']; ?>" async defer></script>
+<?php include '/srv/www/html/includes/06.html'; ?>
     <style nonce="<?php echo $GLOBALS['csp_nonce']; ?>">
 <?php include "/srv/www/html/includes/style.html" ?>
 
@@ -97,20 +70,31 @@
     <main id="main">
       <section>
         <h2>ユーザー登録</h2>
-        <div role="form">
-          <div id="loginid-label">ログインID</div>
-          <div role="textbox" id="loginid" contenteditable="true" aria-placeholder="ログインID" aria-multiline="false" aria-required="true" tabindex="0" aria-labelledby="loginid-label"></div><br>
-          <div id="username-label">ユーザー名</div>
-          <div role="textbox" id="username" contenteditable="true" aria-placeholder="ユーザー名" aria-multiline="false" aria-required="true" tabindex="0" aria-labelledby="username-label"></div><br>
-          <div id="website-label">ホームぺージ(任意)</div>
-          <div role="textbox" id="website" contenteditable="true" aria-placeholder="ホームぺージ" aria-multiline="false" aria-required="false" tabindex="0" aria-labelledby="website-label"></div><br>
-          <div id="g-recaptcha">
+        <form method="POST">
+          <label>
+            ログインID
+            <input type="text" name="loginid" placeholder="ログインID" autocomplete="username" required disabled><br>
+          </label>
+          <label>
+            表示名
+            <input type="text" name="nickname" placeholder="ニックネーム" autocomplete="nickname" required disabled><br>
+          </label>
+          <label>
+            ホームぺージ(任意)
+            <input type="url" name="website" placeholder="ホームぺージ" autocomplete="url" required disabled><br>
+          </label>
+          <input type="hidden" name="token" id="recaptcha-token" readonly>
+          <input type="hidden" name="action" value="<?php echo $recaptcha_act; ?>" readonly>
+          <div id="g-recaptcha" class="hidden"></div>
+          <div aria-live="polite" class="load">
+            <div role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" aria-labelledby="status-label" id="load-progress-bar" class="hidden"></div>
+            <p id="status-label" class="hidden">読込中...</p>
           </div>
           <br>
-          <button type="button" id="register" disabled>登録</button><br><br>
-          <a href="/login/">既にアカウントを持っています</a><br><br>
-          <a href="//miikun95.net/">MiikunWorld95に戻る</a>
-        </div>
+          <button id="register" disabled>登録</button><br><br>
+        </form>
+        <a href="/login/">既にアカウントを持っています</a><br><br>
+        <a href="//miikun95.net/">MiikunWorld95に戻る</a>
         <hr>
         <h2>外部アカウントで登録</h2>
         <button type="button" class="gsi-material-button" id="g-login" disabled>
@@ -207,6 +191,6 @@
         }).catch(function(e) {});
       });
     </script>
+<?php include "/srv/www/html/includes/under-construction.html" ?>
   </body>
 </html>
-

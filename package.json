@@ -1,0 +1,6 @@
+{
+  "devDependencies": {
+    "ttf2eot": "^3.1.0",
+    "workbox-cli": "^7.4.1"
+  }
+}

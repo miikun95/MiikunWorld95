@@ -1,0 +1,10 @@
+[
+  {
+    "relation": ["delegate_permission/common.handle_all_urls"],
+    "target": {
+      "namespace": "android_app",
+      "package_name": "net.miikun95.miikunworld95",
+      "sha256_cert_fingerprints": ["F2:14:2B:AF:9E:9B:8E:BC:32:41:99:DB:5A:1A:A5:0D:0F:F5:76:F9:F0:74:33:AA:FA:FD:DB:6D:82:96:E0:DD"]
+    }
+  }
+]

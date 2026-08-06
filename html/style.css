@@ -4,7 +4,7 @@
 }
 .marquee:hover { animation-play-state: paused }
 button:disabled:hover, button:disabled:focus { color: #FF0808 !important; }
-:not(h1):not(li) > a:hover:not(.skip-link):not(.cookie-consent a), :not(h1):not(li) > a:focus:not(.skip-link):not(.cookie-consent a) { border: 3px groove #000000 !important; }
+:not(h1):not(li) > a:hover:not(.skip-link):not(.cookie-consent a):not(.no-border), :not(h1):not(li) > a:focus:not(.skip-link):not(.cookie-consent a):not(.no-border) { border: 3px groove #000000 !important; }
 .cookie-detail { font-size: 85%; }
 div[role="checkbox"] {
   border: 1px solid #000000;
