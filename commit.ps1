@@ -11,4 +11,3 @@ Write-Progress -Activity "処理中" -Status "4 / 5" -PercentComplete 80
 sudo git push gitlab
 Write-Progress -Activity "処理中" -Status "5 / 5" -PercentComplete 100
 Write-Progress -Activity "処理中" -Complete
-Write-Host -Color Green "完了！"
