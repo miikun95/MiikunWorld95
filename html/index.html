@@ -157,7 +157,7 @@ include '/srv/www/html/includes/head1.html'; ?>
         人目の訪問者です！
       </div>
       <div class="marquee-container">
-        <div class="marquee"><?php echo $message; ?></div>
+        <div class="marquee"><?php echo $message; ?>&nbsp;MiikunWorld95は2024年に出来たmiikun95のホームページです！はじめはGitHub Pagesで構築されていました。その後、２０２５に移転し、２０２６に大幅にデザインをリニューアルしました！</div>
       </div>
     </header>
     <br>
@@ -173,27 +173,40 @@ include '/srv/www/html/includes/head1.html'; ?>
         </picture>
         <h3>プロフィール</h3>
         <p>miikun95のプロフィールをチェック！</p>
-        <a href="/profile/" aria-label="プロフィールを見る">プロフィールを詳しく見る</a>
+        <a href="/profile/">プロフィールを見る</a><br><br>
         <hr>
       </section>
       <section>
         <h2>IP確認、Base64変換などシンプルで役立つ便利ツール！</h2>
-        <hr>
         <h3>IPチェッカー 最新のUA-CHも確認出来るツールです！</h3>
-        <a href="/tools/001/" aria-label="IPチェッカーを試す">IPチェッカー</a>
-        <a href="/tools/">便利ツールを全て見る</a>
-      </section>
+        <a href="/tools/001/">IPチェッカー</a>
+        <a href="/tools/">便利ツールを全て見る</a><br><br>
+      </section><hr>
+      <section>
+        <h2>ダウンロードセンター</h2>
+        <h3>MinecraftのMod&nbsp;ミーくんMod</h3>
+        <a href="/download-center/detail/miikun-mod/">ミーくんModのダウンロード</a><br><br>
+        <a href="/download-center/">ダウンロードセンターへ</a><br><br>
+      </section><hr>
       <section>
         <h2>MiikunWorld95のアプリが登場！</h2>
-        <hr>
-        <h3>クイックインストール</h3>
-        <install>
-          このブラウザはクイックインストールに対応していません。
-        </install><br><br>
-        <a href="/download-center/files/MiikunWorld95.apk">インストール</a>
+        <p>このショートカットアプリをインストールすると、待受画面やデスクトップからMiikunWorld95に簡単にアクセス出来ます！</p>
+        <h3>インストール</h3>
+        <install></install><br><br>
+        <button type="button" id="install">インストール</button><br><br>
+        <a href="/download-center/detail/miikunworld95/">MiikunWorld95 アプリについて詳しく見る</a><br><br>
       </section>
     </main>
 <?php include '/srv/www/html/includes/footer.html';
 include '/srv/www/html/includes/cookie-consent.html'; ?>
+    <script type="module" nonce="<?php echo $GLOBALS['csp_nonce']; ?>">
+      "use strict";
+      document.getElementById("install").addEventListener("click", async function() {
+        if (!deferredPrompt) return;
+        deferredPrompt.prompt();
+        var { outcome } = await deferredPrompt.userChoice;
+        deferredPrompt = null;
+      });
+    </script>
   </body>
 </html>

@@ -35,3 +35,11 @@
         navigator.serviceWorker.register("/sw.js")
       }
     </script>
+    <script type="module" nonce="<?php echo $GLOBALS['csp_nonce']; ?>">
+      "use strict";
+      var deferredPrompt;
+      window.addEventListener("beforeinstallprompt", function(e) {
+        e.preventDefault();
+        deferredPrompt = e;
+      });
+    </script>

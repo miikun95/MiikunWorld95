@@ -395,7 +395,9 @@
         padding: 15px;
         font-weight: bold;
       }
-      a, button:not(.gsi-material-button), [role=radio] {
+      [tabindex=0] { cursor: pointer; }
+      a, button:not(.gsi-material-button), [role=radio], install {
+        cursor: pointer;
         color: #000000;
         border: 3px ridge #000000;
         padding: 2px;
@@ -439,7 +441,7 @@
         background-color: transparent;
       }
       .mobile { display: none; }
-      input, textarea, button { appearance:none; }
+      input, textarea, button { appearance: none; }
       [type=text], [type=number], [type=password], [type=url], [type=datetime-local], textarea {
         margin: 5px;
         border: 3px groove #000000;
