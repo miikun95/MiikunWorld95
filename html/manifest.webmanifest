@@ -12,14 +12,8 @@
   "display_override": ["window-controls-overlay", "tabbed", "standalone", "fullscreen", "minimal-ui", "browser"],
   "theme_color": "#A7D474",
   "background_color": "#FFFFFF",
-  "prefer_related_applications": true,
-  "related_applications": [
-    {
-      "platform": "miikunworld95",
-      "url": "https://miikun95.net/download-center/miikunworld95/",
-      "id": "net.miikun95.miikunworld95"
-    }
-  ],
+  "prefer_related_applications": false,
+  "related_applications": [],
   "icons": [
     {
       "src": "/miikun95-64.png",
