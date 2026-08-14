@@ -24,6 +24,15 @@ if (count($host_parts) >= 3) {
 } else {
   $GLOBALS['domain'] = $current_host;
 }
+if ($_SERVER['REQUEST_METHOD'] === 'BREW') {
+  http_response_code(418);
+  include '/srv/www/html/error/418/index.html';
+  exit;
+} elseif ($_SERVER['REQUEST_METHOD'] === 'WHEN') {
+  http_response_code(418);
+  include '/srv/www/html/error/418/index.html';
+  exit;
+}
 /* $pdo = new PDO("mysql:host=localhost;dbname=miikun_world_db", getenv('DB_USER'), getenv('DB_PASS'), [
   PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
   PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,

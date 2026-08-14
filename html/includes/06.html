@@ -1,23 +1,4 @@
     <script nonce="<?php echo $GLOBALS['csp_nonce']; ?>">
-      "use strict";
-      if (window.trustedTypes && window.trustedTypes.createPolicy) {
-        if (!window.trustedTypes.defaultPolicy) {
-          window.trustedTypes.createPolicy('default', {
-            createScriptURL: function(url) {
-              var s = String(url);
-              if (
-                s.indexOf("https://www.recaptcha.net/") === 0 ||
-                s.indexOf("https://www.gstatic.com/") === 0 ||
-                s.indexOf("blob:") === 0
-              ) { return s; }
-              return null;
-            },
-            createHTML: function(html) {
-              return html;
-            }
-          });
-        }
-      }
       window.resetCAPTCHA = function() {
         grecaptcha.enterprise.reset(window.widgetId);
       };

@@ -92,7 +92,9 @@ include '/srv/www/html/includes/06.html';
       <section>
         <br>
         <h2 id="file-title">MiikunWorld95 アプリ</h2>
-        <a id="download-button" href="/download-center/files/MiikunWorld95.apk">TWA(APK)</a><br>
+        <install>
+          <button type="button" id="install">インストール</button>
+        </install><br><br>
         <p aria-hidden="true">&nbsp;&nbsp;&nbsp;</p>
         <div aria-live="polite" class="download">
           <div role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" aria-labelledby="text-downloading" id="dl-progress-bar" class="invisible"></div>
@@ -238,6 +240,12 @@ include '/srv/www/html/includes/06.html';
         };
         verify.send();
       }
+    </script>
+    <script type="module" nonce="<?php echo $GLOBALS['csp_nonce']; ?>">
+      "use strict";
+      document.getElementById("install").addEventListener("click", function() {
+        window.deferredPrompt.prompt();
+      });
     </script>
   </body>
 </html>
