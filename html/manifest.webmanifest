@@ -57,5 +57,9 @@
       "form_factor": "narrow",
       "label": "MiikunWorld95トップページ"
     }
+  ],
+  "categories": ["utilities"],
+  "scope_extensions": [
+    {"origin": "*.miikun95.net"}
   ]
 }
