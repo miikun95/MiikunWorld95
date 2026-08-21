@@ -105,8 +105,12 @@
       document.getElementById("rt-convert-toggle").addEventListener("change", function() {
         if (document.getElementById("rt-convert-toggle").checked === true) {
           currentRTConvertState.textContent = "有効";
+          convert();
         } else {
           currentRTConvertState.textContent = "無効";
+        }
+        if (document.getElementById("rt-convert-toggle").checked === true) {
+          convert();
         }
       });
       document.getElementById("input").addEventListener("input", function() {
