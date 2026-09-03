@@ -1,9 +1,13 @@
 #!/usr/bin/pwsh
+param(
+  [Parameter(Mandatory = $true)]
+  [string]$Message
+)
 Set-Location /srv/www/
 Write-Progress -Activity "処理中" -Status "0 / 6" -PercentComplete 0
 sudo git add -A
 Write-Progress -Activity "処理中" -Status "1 / 6" -PercentComplete 17
-sudo git commit -am "更新"
+sudo git commit -am "$Message"
 Write-Progress -Activity "処理中" -Status "2 / 6" -PercentComplete 34
 sudo git push
 Write-Progress -Activity "処理中" -Status "3 / 6" -PercentComplete 51
