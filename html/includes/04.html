@@ -1,0 +1,50 @@
+<?php
+$pdo = new PDO('mysql:dbname=miikun_world_db;charset=utf8mb4', getenv('DB_USER'), getenv('DB_PASS'), [
+  PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
+  PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
+]);
+$stmt0 = $pdo->prepare("SELECT clap_count FROM claps WHERE article = ?");
+$stmt0->execute([$article]);
+$clap_count = $stmt0->fetchColumn();
+?>
+      <div>
+        <br>
+        <form method="POST" action="/clap.html">
+          <input type="hidden" name="article" required readonly value="<?php echo $article; ?>">
+          <button><?php echo $clap_count !== false ? $clap_count : 0; ?>&nbsp;拍手</button>
+        </form>
+      </div>
+      <hr>
+      <section>
+<?php
+$stmt1 = $pdo->prepare("SELECT COUNT(*) FROM comments WHERE article = ?");
+$stmt1->execute([$article]);
+?>
+        <h2>コメント</h2>
+        <p><?php echo $stmt1->fetchColumn(); ?>件のコメント</p>
+        <hr>
+<?php
+$stmt2 = $pdo->prepare("SELECT username, content, website, created_at FROM comments WHERE article = ? ORDER BY created_at DESC");
+$stmt2->execute([$article]);
+foreach ($stmt2->fetchAll() as $c): ?>
+        <dl class="comment-item">
+          <dt>ユーザー名：</dt><dd><?php echo htmlspecialchars($c['username'], ENT_QUOTES) ?></dd>
+          <dt>ホームぺージ：</dt><dd><a href="<?php echo htmlspecialchars($c['website'] ?? '', ENT_QUOTES); ?>" rel="ugc"><?php echo htmlspecialchars($c['website'] ?? '', ENT_QUOTES) ?></a></dd>
+          <dt>投稿日：</dt><dd><?php echo date('Y-m-d H:i', strtotime($c['created_at'])) ?></dd>
+          <dt>コメント：</dt><dd><br><?php echo nl2br(htmlspecialchars($c['content'], ENT_QUOTES)) ?></dd>
+        </dl>
+        <hr>
+<?php endforeach; ?>
+        <h3>コメントを書く</h3>
+        <form method="POST" action="/comment-post.html">
+          <input type="text" name="nickname" placeholder="ニックネーム" autocomplete="nickname">
+          <input type="text" name="website" placeholder="ホームぺージ" autocomplete="url">
+          <textarea name="comment" placeholder="コメント" autocomplete="off" required></textarea>
+          <input type="number" name="external" placeholder="こ こ に は 何 も 入 力 し な い で く だ さ い" autocomplete="off">
+          <input type="hidden" name="article" required readonly value="<?php echo $article; ?>">
+          <input type="hidden" name="token" id="recaptcha-token" required readonly>
+          <input type="hidden" name="action" value="comment_post" required readonly>
+          <div id="g-recaptcha"></div><br>
+          <button type="submit">投稿</button>
+        </form>
+      </section>

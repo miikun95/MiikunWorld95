@@ -1,0 +1,9 @@
+<?php
+header('Content-Type: application/json; charset=UTF-8');
+$ch = curl_init();
+curl_setopt($ch, CURLOPT_URL, "https://www.googleapis.com/pagespeedonline/v5/runPagespeed?url=https%3A%2F%2Fmiikun95.net&strategy=mobile&locale=ja&key=" . getEnv('PAGESPEED_API_KEY'));
+curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+curl_setopt($ch, CURLOPT_TIMEOUT, 30);
+echo curl_exec($ch);
+curl_close($ch);
+exit;

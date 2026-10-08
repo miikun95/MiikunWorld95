@@ -1,0 +1,197 @@
+<?php
+  http_response_code(503);
+  $state = base64_encode(random_bytes(32));
+  $_SESSION['oauth_state'] = $state;
+  $recaptcha_act = 'REGISTRATION';
+  $query = 'label';
+  $index = '0';
+  include "/srv/www/html/includes/head1.html"
+?>
+    <meta name="description" content="MiikunWorld ID">
+    <meta name="keywords" content="miikun95">
+    <title>MiikunWorld ID</title>
+    <meta property="og:title" content="MiikunWorld ID">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://id.miikun95.net/">
+    <meta property="og:image" content="https://miikun95.net/miikun95.png">
+    <meta property="og:site_name" content="MiikunWorld ID">
+<?php include "/srv/www/html/includes/head2.html" ?>
+    <link rel="canonical" href="https://miikun95.net/profile/">
+<?php include '/srv/www/html/includes/06.html'; ?>
+    <style nonce="<?php echo $GLOBALS['csp_nonce']; ?>">
+<?php include "/srv/www/html/includes/style.html" ?>
+
+      #g-recaptcha {
+        width: 301px;
+        height: 75px;
+        overflow: hidden;
+        border: 1px solid #000000;
+        border-radius: 4px;
+        background-image: url("/miikun95-64.webp");
+        background-repeat: repeat;
+        background-size: 32px 32px;
+      }
+
+      .gsi-material-button {
+        height: 40px;
+        border: 3px ridge #747775;
+        white-space: nowrap;
+        overflow: hidden;
+      }
+
+      .gsi-material-button-content-wrapper {
+        display: inline-block;
+        vertical-align: top;
+      }
+
+      .gsi-material-button-icon {
+        display: inline-block;
+        vertical-align: middle;
+        width: 20px;
+        height: 20px;
+        margin-left: 12px;
+        margin-right: 10px;
+      }
+
+      .gsi-material-button-contents {
+        display: inline-block;
+        vertical-align: middle;
+        margin-right: 12px;
+      }
+    </style>
+<?php include "/srv/www/html/includes/header.html" ?>
+    <header>
+      <div class="marquee-container">
+        <div class="marquee" id="marquee">現在、新規登録を停止しています。</div>
+      </div>
+    </header>
+    <br>
+    <hr>
+    <main id="main">
+      <section>
+        <h2>ユーザー登録</h2>
+        <form method="POST">
+          <label>
+            ログインID
+            <input type="text" name="loginid" placeholder="ログインID" autocomplete="username" required disabled><br>
+          </label>
+          <label>
+            表示名
+            <input type="text" name="nickname" placeholder="ニックネーム" autocomplete="nickname" required disabled><br>
+          </label>
+          <label>
+            ホームぺージ(任意)
+            <input type="url" name="website" placeholder="ホームぺージ" autocomplete="url" required disabled><br>
+          </label>
+          <input type="hidden" name="token" id="recaptcha-token" readonly>
+          <input type="hidden" name="action" value="<?php echo $recaptcha_act; ?>" readonly>
+          <div id="g-recaptcha" class="hidden"></div>
+          <div aria-live="polite" class="load">
+            <div role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" aria-labelledby="status-label" id="load-progress-bar" class="hidden"></div>
+            <p id="status-label" class="hidden">読込中...</p>
+          </div>
+          <br>
+          <button id="register" disabled>登録</button><br><br>
+        </form>
+        <a href="/login/">既にアカウントを持っています</a><br><br>
+        <a href="//miikun95.net/">MiikunWorld95に戻る</a>
+        <hr>
+        <h2>外部アカウントで登録</h2>
+        <button type="button" class="gsi-material-button" id="g-login">
+          <span class="gsi-material-button-state"></span>
+            <span class="gsi-material-button-content-wrapper">
+              <span class="gsi-material-button-icon">
+              <img src="/google-logo.svg" title="Google" alt="" width="20" height="20">
+            </span>
+            <span class="gsi-material-button-contents">Googleで登録</span>
+          </span>
+        </button>
+        <script nonce="<?php echo $GLOBALS['csp_nonce']; ?>">
+          document.getElementById("g-login").addEventListener("click", oauthSignIn);
+            function oauthSignIn() {
+            var form = document.createElement("form");
+            form.setAttribute("method", "GET");
+            form.setAttribute("action", "https://accounts.google.com/o/oauth2/v2/auth");
+             var params = {
+              "client_id": "20945063141-gqnclsi7fe466ado8u6c4svpvssi1kid.apps.googleusercontent.com",
+              "redirect_uri": "https://id.miikun95.net/register.html",
+              "response_type": "code",
+              "scope": "openid",
+              "include_granted_scopes": "true",
+              "state": "<?php echo $state; ?>"
+            };
+
+            for (var p in params) {
+              var input = document.createElement("input");
+              input.setAttribute("type", "hidden");
+              input.setAttribute("name", p);
+              input.setAttribute("value", params[p]);
+              form.appendChild(input);
+            }
+
+            document.body.appendChild(form);
+            form.submit();
+          }
+        </script>
+      </main>
+<?php include "/srv/www/html/includes/footer.html"; ?>
+<?php include "/srv/www/html/includes/cookie-consent.html"; ?>
+    <script nonce="<?php echo $GLOBALS['csp_nonce']; ?>">
+      "use strict";
+      document.getElementById("register").addEventListener("click", function() {
+        if (!window.PublicKeyCredential) {
+          alert("お使いのブラウザはパスキーに対応していません。代わりに、Googleでサインインをお試しください。");
+          return;
+        }
+
+        var response = grecaptcha.enterprise.getResponse(window.widgetId);
+        if (!response) { return; }
+        navigator.credentials.create({
+          publicKey: {
+            challenge: new Uint8Array(32),
+            rp: {
+              name: "miikunworld-id",
+              id: "id.miikun95.net"
+            },
+            user: {
+              id: new Uint8Array([65, 66, 67, 68, 69]).buffer,
+              name: document.getElementById("loginid").textContent.replace(/&/g, "&amp;").replace(/'/g, "&apos;").replace(/"/g, "&quot;").replace(/</g, "&lt;").replace(/>/g, "&gt;").trim(),
+              displayName: document.getElementById("username").textContent.replace(/&/g, "&amp;").replace(/'/g, "&apos;").replace(/"/g, "&quot;").replace(/</g, "&lt;").replace(/>/g, "&gt;").trim(),
+            },
+            pubKeyCredParams: [
+              {alg: -7, type:"public-key"},
+              {alg: -35, type:"public-key"},
+              {alg: -36, type:"public-key"}
+            ],
+            excludeCredentials: [{
+              id: new Uint8Array([65, 66, 67, 68, 69]).buffer,
+              type: "public-key"
+            }],
+            authenticatorSelection: {
+              requireResidentKey: true,
+              userVerification: "preferred"
+            },
+          } 
+        }).then(function(credential) {
+          grecaptcha.reset(widgetId);
+          var register = createXHR();
+          var data = {
+            name: document.getElementById("username").textContent.replace(/&/g, "&amp;").replace(/'/g, "&apos;").replace(/"/g, "&quot;").replace(/</g, "&lt;").replace(/>/g, "&gt;").trim(),
+            captcha: response,
+            action: "REGISTRATION"
+          };
+
+          register.open("POST", "/register.html", true);
+          register.setRequestHeader("Content-Type", "application/json");
+          register.onload = function() {
+            if (register.status === 200) {
+              document.getElementById("username").innerText = "";
+            }
+          };
+          register.send(JSON.stringify(data));
+        }).catch(function(e) {});
+      });
+    </script>
+<?php #include "/srv/www/html/includes/under-construction.html" ?>
+  </body>
+</html>

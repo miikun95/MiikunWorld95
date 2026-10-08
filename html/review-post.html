@@ -1,0 +1,75 @@
+<?php
+require 'vendor/autoload.php';
+use Google\Cloud\RecaptchaEnterprise\V1\Client\RecaptchaEnterpriseServiceClient;
+use Google\Cloud\RecaptchaEnterprise\V1\Event;
+use Google\Cloud\RecaptchaEnterprise\V1\Assessment;
+use Google\Cloud\RecaptchaEnterprise\V1\CreateAssessmentRequest;
+use Google\Cloud\RecaptchaEnterprise\V1\TokenProperties\InvalidReason;
+$username = trim($_POST['username']) ?? '名無しさん';
+$website  = trim($_POST['website']) ?? '';
+$comment  = trim($_POST['comment'])  ?? '';
+$article  = $_POST['article']   ?? '';
+$token  = $_POST['token']  ?? '';
+$action   = $_POST['action']   ?? '';
+$recaptchaKey = getEnv('RECAPTCHA_KEY');
+$project = 'miikunworld95-1759993451408';
+if (!preg_match('/^[0-9]{6}$/', $article)) {
+  http_response_code(422);
+  exit;
+}
+if (empty($token)) {
+  $_SESSION['error'] = ['captcha_invalid'];
+  header("Location: https://blog.miikun95.net/article/{$article}/");
+  exit;
+}
+function getConsentId() {
+  if (isset($_COOKIE['__Secure-CONSENT'])) {
+    $consentJson = json_decode(urldecode($_COOKIE['__Secure-CONSENT']), true);
+    return $consentJson['id'] ?? null;
+  }
+  return null;
+}
+$userId = $_SESSION['user_uuid'] ?? getConsentId() ?? session_id();
+$client = new RecaptchaEnterpriseServiceClient([
+  'transport' => 'rest',
+  'credentials' => '/srv/www/miikunworld95-1759993451408-734e80132aaa.json'
+]);
+$projectName = $client->projectName($project);
+$event = (new Event())
+  ->setSiteKey($recaptchaKey)
+  ->setToken($token)
+  ->setHashedAccountId(hash('sha512', $userId, true));
+$assessment = (new Assessment())
+  ->setEvent($event);
+$request = (new CreateAssessmentRequest())
+  ->setParent($projectName)
+  ->setAssessment($assessment);
+$response = $client->createAssessment($request);
+if ($response->getTokenProperties()->getValid() == false) {
+  $_SESSION['error'] = ['captcha_invalid'];
+  header("Location: https://blog.miikun95.net/article/{$article}/");
+  exit;
+}
+if ($response->getTokenProperties()->getAction() == $action) {
+  $response = 'false';
+  if ($response !== 'false') {
+    $_SESSION['error'] = ['comment_not_authorized'];
+    header("Location: https://blog.miikun95.net/article/{$article}/");
+    exit;
+  } else {
+    $pdo = new PDO('mysql:dbname=miikun_world_db;charset=utf8mb4', getenv('DB_USER'), getenv('DB_PASS'), [
+      PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
+      PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
+    ]);
+    $stmt = $pdo->prepare("INSERT INTO comments (article, username, website, content) VALUES (:article, :username, :website, :content)");
+    $stmt->execute([
+      ':article'  => $article,
+      ':username' => $username,
+      ':website' => $website,
+      ':content'  => $comment
+    ]);
+    header("Location: https://blog.miikun95.net/article/{$article}/");
+    exit;
+  }
+}
+

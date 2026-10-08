@@ -1,0 +1,55 @@
+<?php
+if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+  http_response_code(405);
+  echo 'このリクエストの方法は許可されていません！';
+
+  exit;
+}
+require 'vendor/autoload.php';
+use Google\Cloud\RecaptchaEnterprise\V1\Client\RecaptchaEnterpriseServiceClient;
+use Google\Cloud\RecaptchaEnterprise\V1\Event;
+use Google\Cloud\RecaptchaEnterprise\V1\Assessment;
+use Google\Cloud\RecaptchaEnterprise\V1\CreateAssessmentRequest;
+use Google\Cloud\RecaptchaEnterprise\V1\TokenProperties\InvalidReason;
+$token  = $_SERVER['HTTP_X_RECAPTCHA_TOKEN'] ?? '';
+$action = $_SERVER['HTTP_X_RECAPTCHA_ACTION'] ?? '';
+$recaptchaKey = getEnv('RECAPTCHA_KEY');
+$project = 'miikunworld95-1759993451408';
+if (empty($token)) {
+  echo 'もう一度お試しください';
+  exit;
+}
+function getConsentId() {
+  if (isset($_COOKIE['__Secure-CONSENT'])) {
+    $consentJson = json_decode(urldecode($_COOKIE['__Secure-CONSENT']), true);
+    return $consentJson['id'] ?? null;
+  }
+  return null;
+}
+$userId = $_SESSION['user_uuid'] ?? getConsentId() ?? session_id();
+$client = new RecaptchaEnterpriseServiceClient([
+  'transport' => 'rest',
+  'credentials' => getEnv('RECAPTCHA_AGENT_TOKEN_FILE')
+]);
+$projectName = $client->projectName($project);
+$event = (new Event())
+  ->setSiteKey($recaptchaKey)
+  ->setToken($token)
+  ->setHashedAccountId(hash('sha512', $userId, true));
+$assessment = (new Assessment())
+  ->setEvent($event);
+$request = (new CreateAssessmentRequest())
+  ->setParent($projectName)
+  ->setAssessment($assessment);
+$response = $client->createAssessment($request);
+if ($response->getTokenProperties()->getValid() == false) {
+  echo '検証に失敗しました:(　あなたはロボットかもしれません。';
+  exit;
+}
+if ($response->getTokenProperties()->getAction() == $action) {
+  echo '<br><a href="mailto:miikun95@miikun95.net">miikun95@miikun95.net</a>';
+  exit;
+} else {
+  echo '<br>もう一度お試しください';
+  exit;
+}

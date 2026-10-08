@@ -1,0 +1,265 @@
+<?php include "/srv/www/html/includes/head1.html" ?>
+    <meta name="description" content="メッセージアプリで使えるミーくんスタンプ第一弾！">
+    <meta name="keywords" content="miikun95, ミーくんスタンプ">
+    <title>ミーくんスタンプのダウンロード｜MiikunWorld95</title>
+    <meta property="og:title" content="ミーくんスタンプのダウンロード｜MiikunWorld95">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://miikun95.net/download-center/detail/000002/">
+    <meta property="og:image" content="https://miikun95.net/miikun95.png">
+<?php include "/srv/www/html/includes/head2.html" ?>
+    <link rel="canonical" href="https://miikun95.net/download-center/detail/000002/">
+    <script nonce="<?php echo $GLOBALS['csp_nonce']; ?>">
+      "use strict";
+      if (window.trustedTypes && window.trustedTypes.createPolicy) {
+        if (!window.trustedTypes.defaultPolicy) {
+          window.trustedTypes.createPolicy('default', {
+            createScriptURL: function(url) {
+              var s = String(url);
+              if (
+                s.indexOf("https://www.recaptcha.net/") === 0 ||
+                s.indexOf("https://www.gstatic.com/") === 0
+              ) {
+                return s;
+              }
+              return null; 
+            }
+          });
+        }
+      }
+
+      window.onloadCallback = function() {
+        document.querySelector("[role=\"radiogroup\"]").addEventListener("click", function() {
+          window.widgetId = grecaptcha.enterprise.render("g-recaptcha", {
+            "sitekey": "6LeFveMrAAAAAFtiEsCxo4juadGjNTfUO-QHNtRH",
+            "theme": "light",
+            "size": "normal",
+            "tabindex": "0",
+            "action": "review_post"
+          });
+        }, { once: true });
+      }
+    </script>
+    <script src="https://www.recaptcha.net/recaptcha/enterprise.js?onload=onloadCallback&render=explicit&hl=ja" nonce="<?php echo $GLOBALS['csp_nonce']; ?>" async defer></script>
+    <style nonce="<?php echo $GLOBALS['csp_nonce']; ?>">
+<?php include "/srv/www/html/includes/style.html"; ?>
+
+      #g-recaptcha {
+        width: 301px;
+        height: 75px;
+        overflow: hidden;
+        border: 1px solid #000000;
+        border-radius: 4px;
+        background-image: url("/miikun95-64.webp");
+        background-repeat: repeat;
+        background-size: 32px 32px;
+      }
+    </style>
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      "itemListElement": [{
+        "@type": "ListItem",
+        "position": 1,
+        "name": "ダウンロードセンター",
+        "item": "https://miikun95.net/download-center/"
+      }, {
+        "@type": "ListItem",
+        "position": 2,
+        "name": "ダウンロードぺージ",
+        "item": "https://miikun95.net/download-center/detail/"
+      }, {
+        "@type": "ListItem",
+        "position": 3,
+        "name": "ミーくんスタンプ",
+        "item": "https://miikun95.net/download-center/detail/000002/"
+      }]
+    }
+    </script>
+<?php include "/srv/www/html/includes/header.html" ?>
+    <header>
+      <div class="marquee-container">
+        <div class="marquee">メッセージアプリなどで使えるミーくんスタンプ第一弾のダウンロードぺージです</div>
+      </div>
+    </header>
+    <ol>
+      <li><a href="/" aria-label="トップページ">MiikunWorld95</a></li>
+      <li><b>-&gt;</b>&nbsp;<a href="/download-center/" aria-label="ダウンロードセンター">ダウンロードセンター</a></li>
+      <li><b>-&gt;</b>&nbsp;<span>ミーくんスタンプのダウンロード</span></li>
+    </ol>
+    <hr>
+    <main id="main">
+      <section>
+        <img src="/resources/no-image.svg" alt="" title="No Image" width="240" height="160" fetchpriority="high">
+        <br>
+        <h2 id="file-title">ミーくんスタンプ</h2>
+  <button id="download-button" type="button">ダウンロード</button><br>
+  <noscript><p>JavaScriptが無効です。直接ダウンロードをクリックしてください。</p><br><a href="/download-center/files/miikun-sticker.zip" aria-label="直接ダウンロード">直接ダウンロード</a></noscript>
+        <p aria-hidden="true">&nbsp;&nbsp;&nbsp;</p>
+        <div aria-live="polite" class="download">
+          <div role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" aria-labelledby="text-downloading" id="dl-progress-bar" class="invisible"></div>
+          <p id="text-downloading" class="hidden">ダウンロード中です...</p>
+          <p id="text-dl-complete" class="hidden">ダウンロード完了！</p>
+        </div>
+        <hr>
+      </section>
+      <section>
+        <h3>レビュー</h3>
+        <div role="form">
+          <div id="username-label">ユーザー名</div>
+          <div role="textbox" id="username" contenteditable="true" aria-placeholder="username" aria-multiline="false" aria-required="false" tabindex="0" aria-labelledby="username-label"></div><br>
+          <div id="rate-label">評価</div>
+          <div role="radiogroup" id="rate">
+            <div role="radio" aria-checked="false" tabindex="0" data-value="1">1</div>
+            <div role="radio" aria-checked="false" tabindex="0" data-value="2">2</div>
+            <div role="radio" aria-checked="false" tabindex="0" data-value="3">3</div>
+            <div role="radio" aria-checked="false" tabindex="0" data-value="4">4</div>
+            <div role="radio" aria-checked="false" tabindex="0" data-value="5">5</div>
+          </div><br>
+          <div id="comment-label">コメント</div>
+          <div role="textbox" id="comment" contenteditable="true" aria-placeholder="username" aria-multiline="true" aria-required="false" tabindex="0" aria-labelledby="comment-label"></div><br>
+          <div id="g-recaptcha">
+          </div>
+          <br>
+          <button type="button" id="post">投稿</button>
+        </div>
+      </section>
+    </main>
+    <?php include "/srv/www/html/includes/footer.html"; ?>
+    <?php include "/srv/www/html/includes/cookie-consent.html"; ?>
+    <script nonce="<?php echo $GLOBALS['csp_nonce']; ?>">
+      "use strict";
+      var downloadText = document.getElementById("text-downloading");
+      var downloadButton = document.getElementById("download-button");
+      var dlProgressBar = document.getElementById("dl-progress-bar");
+      var downloadCompleteText = document.getElementById("text-dl-complete");
+      downloadButton.addEventListener("click", function() {
+        var download = createXHR();
+        dlProgressBar.setAttribute("aria-valuenow", "0");
+        dlProgressBar.setAttribute("class", "dl-progress-bar-show");
+        setTimeout(function() {
+          download.open("GET", "/download-center/files/miikun-sticker.zip", true);
+          download.responseType = "blob";
+          download.onloadstart = function() {
+            downloadText.removeAttribute("class");
+          };
+
+          download.onprogress = function(e) {
+            if (e.lengthComputable) { dlProgressBar.setAttribute("aria-valuenow", Math.floor((e.loaded / e.total) * 100)); }
+          }
+
+          download.onload = function() {
+            var blob = new Blob([download.response], { type: "application/zip" });
+            var url = URL.createObjectURL(blob);
+            var downloadLink = document.createElement("a");
+            dlProgressBar.setAttribute("aria-valuenow", "100");
+            downloadText.setAttribute("class", "hidden");
+            downloadCompleteText.removeAttribute("class");
+            downloadLink.setAttribute("class", "hidden");
+            downloadLink.setAttribute("aria-hidden", "true");
+            downloadLink.href = url;
+            downloadLink.download = "miikun-sticker.zip";
+            document.body.appendChild(downloadLink);
+            downloadLink.click();
+            document.body.removeChild(downloadLink);
+            URL.revokeObjectURL(url);
+            setTimeout(function() {
+              dlProgressBar.setAttribute("aria-valuenow", "0");
+              setTimeout(function() {
+                dlProgressBar.removeAttribute("class");
+                downloadCompleteText.setAttribute("class", "hidden");
+                setTimeout(function() {
+                  dlProgressBar.setAttribute("class", "invisible");
+                }, 400);
+              }, 50);
+            }, 600);
+          };
+
+          download.onerror = function() {
+            dlProgressBar.style.setAttribute("class", "error");
+            dlProgressBar.setAttribute("aria-valuenow", "100");
+          };
+          download.send();
+        }, 850);
+      });
+    </script>
+    <script nonce="<?php echo $GLOBALS['csp_nonce']; ?>">
+      "use strict";
+      var rate1 = document.querySelector("[data-value=\"1\"]");
+      var rate2 = document.querySelector("[data-value=\"2\"]");
+      var rate3 = document.querySelector("[data-value=\"3\"]");
+      var rate4 = document.querySelector("[data-value=\"4\"]");
+      var rate5 = document.querySelector("[data-value=\"5\"]");
+      rate1.addEventListener("click", function() {
+        rate1.setAttribute("aria-checked", "true");
+        rate2.setAttribute("aria-checked", "false");
+        rate3.setAttribute("aria-checked", "false");
+        rate4.setAttribute("aria-checked", "false");
+        rate5.setAttribute("aria-checked", "false");
+      });
+
+      rate2.addEventListener("click", function() {
+        rate1.setAttribute("aria-checked", "false");
+        rate2.setAttribute("aria-checked", "true");
+        rate3.setAttribute("aria-checked", "false");
+        rate4.setAttribute("aria-checked", "false");
+        rate5.setAttribute("aria-checked", "false");
+      });
+
+      rate3.addEventListener("click", function() {
+        rate1.setAttribute("aria-checked", "false");
+        rate2.setAttribute("aria-checked", "false");
+        rate3.setAttribute("aria-checked", "true");
+        rate4.setAttribute("aria-checked", "false");
+        rate5.setAttribute("aria-checked", "false");
+      });
+
+      rate4.addEventListener("click", function() {
+        rate1.setAttribute("aria-checked", "false");
+        rate2.setAttribute("aria-checked", "false");
+        rate3.setAttribute("aria-checked", "false");
+        rate4.setAttribute("aria-checked", "true");
+        rate5.setAttribute("aria-checked", "false");
+      });
+
+      rate5.addEventListener("click", function() {
+        rate1.setAttribute("aria-checked", "false");
+        rate2.setAttribute("aria-checked", "false");
+        rate3.setAttribute("aria-checked", "false");
+        rate4.setAttribute("aria-checked", "false");
+        rate5.setAttribute("aria-checked", "true");
+      });
+
+      document.getElementById("post").addEventListener("click", function() {
+        var response = grecaptcha.enterprise.getResponse(window.widgetId);
+        if (!response) { return; }
+        var reviewPost = createXHR();
+        var data = {
+          username: document.getElementById("username").textContent.replace(/&/g, "&amp;").replace(/'/g, "&apos;").replace(/"/g, "&quot;").replace(/</g, "&lt;").replace(/>/g, "&gt;").trim(),
+          rate: document.querySelector("[role=\"radio\"][aria-checked=\"true\"]").getAttribute("data-value"),
+          comment: document.getElementById("comment").textContent.replace(/&/g, "&amp;").replace(/'/g, "&apos;").replace(/"/g, "&quot;").replace(/</g, "&lt;").replace(/>/g, "&gt;").trim(),
+          page: "000002",
+          token: response,
+          action: "review_submit"
+        };
+
+        reviewPost.open("POST", "/review-post.html", true);
+        reviewPost.setRequestHeader("Content-Type", "application/json");
+        reviewPost.onload = function() {
+          if (reviewPost.status === 200) {
+            document.getElementById("username").innerText = "";
+            rate1.setAttribute("aria-checked", "false");
+            rate2.setAttribute("aria-checked", "false");
+            rate3.setAttribute("aria-checked", "false");
+            rate4.setAttribute("aria-checked", "false");
+            rate5.setAttribute("aria-checked", "false");
+            document.getElementById("comment").innerText = "";
+          }
+          grecaptcha.enterprise.reset(widgetId);
+        };
+        reviewPost.send(JSON.stringify(data));
+      });
+    </script>
+  </body>
+</html>
+

@@ -1,0 +1,113 @@
+<?php
+$title = 'MiikunWorld95の速さをチェック！ Powered By Google PageSpeed Insights｜MiikunWorld95';
+$descr = 'MiikunWorld95の速さを数字でチェック！';
+$keywd = 'miikun95,MiikunWorld95';
+$url = 'https://miikun95.net/psicheck/';
+include '/srv/www/html/includes/01.html';
+?>
+    <style nonce="<?php echo $GLOBALS['csp_nonce']; ?>">
+<?php include "/srv/www/html/includes/style.html"; ?>
+    </style>
+    <script type="application/ld+json" nonce="<?php echo $GLOBALS['csp_nonce'];?>">
+    {
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      "name": "MiikunWorld95の速さをチェック！ Powered By Google PSI",
+      "url": "<?php echo $url; ?>",
+      "itemListElement": [{
+        "@type": "ListItem",
+        "position": 1,
+        "name": "MiikunWorld95の速さをチェック！ Powered By Google PSI",
+        "item": {
+          "@type": "Thing",
+          "@id": "https://miikun95.net/psicheck/"
+        }
+      }
+      }]
+    }
+    </script>
+<?php include "/srv/www/html/includes/header.html" ?>
+    <header>
+      <div class="marquee-container">
+        <div class="marquee">MiikunWorld95の速さをチェック！ Powered By Google PageSpeed Insights</div>
+      </div>
+    </header>
+    <ol>
+      <li><a href="/" aria-label="トップページ">MiikunWorld95</a></li>
+      <li><b aria-hidden="true">-&gt;&nbsp;</b><span>MiikunWorld95の速さをチェック！ Powered By Google PSI</span></li>
+    </ol>
+    <hr>
+    <main id="main">
+      <section>
+        <h2 id="file-title">MiikunWorld95のPageSpeed Insightsスコア</h2>
+        <button type="button" id="psi-button">計測開始！</button><br>
+        <p aria-hidden="true">&nbsp;&nbsp;&nbsp;</p>
+        <div aria-live="polite" class="psi">
+          <div role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" aria-labelledby="text-analyzing" id="dl-progress-bar" class="invisible"></div>
+          <p id="text-analyzing" class="hidden">計測中です...</p>
+          <p id="text-dl-complete" class="hidden">計測完了！</p>
+        </div>
+        <dl>
+          <dt>パフォーマンス：</dt><dd><span id="score">--</span>/100</dd>
+          <dt>FCP：</dt><dd id="fcp">--</dd>
+          <dt>LCP：</dt><dd id="lcp">--</dd>
+          <dt>TBT：</dt><dd id="tbt">--</dd>
+          <dt>CLS：</dt><dd id="cls">--</dd>
+          <dt>SI：</dt><dd id="si">--</dd>
+        </dl>
+        <hr>
+      </section>
+      <aside>
+        <a href="https://pagespeed.web.dev/analysis?url=https%3A%2F%2Fmiikun95.net%2F" target="_blank" rel="external noopener noreferrer">詳細レポートを表示 [外部リンク]</a><br><br>
+        <a href="https://pagespeed.web.dev/" target="_blank" rel="external noopener noreferrer">Powered By Google PageSpeed Insights</a>
+      </aside>
+    </main>
+    <?php include "/srv/www/html/includes/footer.html"; ?>
+    <?php include "/srv/www/html/includes/cookie-consent.html"; ?>
+    <script nonce="<?php echo $GLOBALS['csp_nonce']; ?>">
+      "use strict";
+      var psiText = document.getElementById("text-analyzing");
+      var psiButton = document.getElementById("psi-button");
+      var dlProgressBar = document.getElementById("dl-progress-bar");
+      var psiCompleteText = document.getElementById("text-dl-complete");
+      psiButton.addEventListener("click", function(e) {
+        var psi = createXHR();
+        dlProgressBar.setAttribute("aria-valuenow", "0");
+        dlProgressBar.setAttribute("class", "dl-progress-bar-show");
+        setTimeout(function() {
+          psi.open("GET", "/psicheck.html", true);
+          psi.responseType = "json";
+          psi.onloadstart = function() {
+            psiText.removeAttribute("class");
+          };
+          psi.onprogress = function(e) {
+            if (e.lengthComputable) { dlProgressBar.setAttribute("aria-valuenow", Math.floor((e.loaded / e.total) * 100)); }
+          }
+          psi.onload = function() {
+            document.getElementById("score").textContent = Math.round(psi.response.lighthouseResult.categories.performance.score * 100);
+            document.getElementById("fcp").textContent = psi.response.lighthouseResult.audits["first-contentful-paint"].displayValue;
+            document.getElementById("lcp").textContent = psi.response.lighthouseResult.audits["largest-contentful-paint"].displayValue;
+            document.getElementById("tbt").textContent = psi.response.lighthouseResult.audits["total-blocking-time"].displayValue;
+            document.getElementById("cls").textContent = psi.response.lighthouseResult.audits["cumulative-layout-shift"].displayValue;
+            document.getElementById("si").textContent = psi.response.lighthouseResult.audits["speed-index"].displayValue;
+            setTimeout(function() {
+              dlProgressBar.setAttribute("aria-valuenow", "0");
+              setTimeout(function() {
+                dlProgressBar.removeAttribute("class");
+                psiCompleteText.setAttribute("class", "hidden");
+                setTimeout(function() {
+                  dlProgressBar.setAttribute("class", "invisible");
+                }, 400);
+              }, 50);
+            }, 600);
+          };
+          psi.onerror = function() {
+            dlProgressBar.setAttribute("class", "error");
+            dlProgressBar.setAttribute("aria-valuenow", "100");
+          };
+          psi.send();
+        }, 850);
+      });
+    </script>
+  </body>
+</html>

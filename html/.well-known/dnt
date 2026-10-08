@@ -1,0 +1,15 @@
+{
+  "tracking": "C",
+  "compliance": [
+    "https://miikun95.net/.well-known/dnt-policy.txt"
+  ],
+  "policy": "https://miikun95.net/privacy-policy/",
+  "controller": [
+    "https://miikun95.net"
+  ],
+  "same-party": [
+    "m95.world"
+  ],
+  "config": "https://miikun95.net/privacy-policy/",
+  "qualifiers": "f"
+}

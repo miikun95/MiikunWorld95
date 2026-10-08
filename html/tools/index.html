@@ -1,0 +1,76 @@
+<?php include "/srv/www/html/includes/head1.html"; ?>
+    <meta name="description" content="IPアドレス確認、Base64変換等、様々な便利ツールをMiikunWorld95でチェックしよう！">
+    <meta name="keywords" content="便利ツール,ツール集,MiikunWorld95">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:site" content="@miikun95">
+    <meta name="twitter:creator" content="@miikun95">
+    <title>便利ツール｜MiikunWorld95</title>
+    <meta property="og:title" content="便利ツール｜MiikunWorld95">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://miikun95.net/tools/">
+    <meta property="og:image" content="https://miikun95.net/miikun95.png">
+<?php include "/srv/www/html/includes/head2.html"; ?>
+    <link rel="canonical" href="https://miikun95.net/tools/">
+    <style nonce="<?php echo $GLOBALS['csp_nonce']; ?>">
+<?php include "/srv/www/html/includes/style.html" ?>
+    </style>
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      "name": "便利ツール",
+      "url": "https://miikun95.net/tools/",
+      "itemListElement": [{
+        "@type": "ListItem",
+        "position": 1,
+        "name": "便利ツール",
+        "item": {
+          "@type": "Thing",
+          "@id": "https://miikun95.net/tools/"
+        }
+      }]
+    }
+    </script>
+<?php include "/srv/www/html/includes/header.html"; ?>
+    <header>
+      <div class="marquee-container">
+        <div class="marquee"><?php echo $message; ?></div>
+      </div>
+    </header>
+    <br>
+    <hr>
+    <ol>
+      <li><a href="/" aria-label="トップページ">MiikunWorld95</a></li>
+      <li aria-current="page"><b aria-hidden="true">-&gt;&nbsp;</b><span>便利ツール</span></li>
+    </ol>
+    <br>
+    <hr>
+        <p>クイックメニュー</p>
+    <ul>
+      <li><a href="/tools/001/">IPアドレス確認</a></li>
+      <li><a href="/tools/002/">Base64変換</a></li>
+      <li><a href="/tools/003/">POSIX時間変換</a></li>
+    </ul>
+    <hr>
+    <main id="main">
+      <h2>便利ツール</h2>
+      <section>
+        <h3>IPチェッカー</h3>
+        <p>IPアドレスに加えリモートホスト、UA、UA-CHの取得に対応！</p>
+        <a href="/tools/001/" aria-label="IPチェッカーを開く">GO！</a>
+      </section>
+      <section>
+        <h3>Base64変換</h3>
+        <p>日本語対応！</p>
+        <a href="/tools/002/" aria-label="Base64変換ツールを開く">GO！</a>
+      </section>
+      <section>
+        <h3>POSIX時間変換</h3>
+        <p>よくあるやつです。</p>
+        <a href="/tools/003/" aria-label="POSIX時間変換ツールを開く">GO！</a>
+      </section>
+    </main>
+<?php include "/srv/www/html/includes/footer.html"; ?>
+<?php include "/srv/www/html/includes/cookie-consent.html" ?>
+  </body>
+</html>

@@ -1,0 +1,10 @@
+{
+  "hosts": {
+    "decade": [
+      {
+        "public_key": "AAAAE2VjZHNhLXNoYTItbmlzdHA1MjEAAAAIbmlzdHA1MjEAAACFBAAZpw3nqNpaXZZHLgFSLbW1Tq3VZu008+Jm1+5mQjN9FCeMKvQS4PMPrBUzvm94cH6AQ2IsjGbxJffGuoaVaAIrtgAwUd3TqQPiqPcQ/3GKOYfWzzShW5Oe3UfDAtN479O0ZVSUB0cKga/BY6ZxLdQ+1XbMvk0Q2NRksxWksGbkmbExmQ==",
+        "algo": "ecdsa-sha2-nistp521"
+      }
+    ]
+  }
+}

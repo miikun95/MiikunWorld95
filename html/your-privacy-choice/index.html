@@ -1,0 +1,48 @@
+<?php
+$title = 'プライバシー設定｜MiikunWorld95';
+$descr = '';
+$keywd = 'miikun95';
+$url = 'https://miikun95.net/your-privacy-choice/';
+include '/srv/www/html/includes/01.html';
+?>
+    <style nonce="<?php echo $GLOBALS['csp_nonce']; ?>">
+<?php include "/srv/www/html/includes/style.html"; ?>
+    </style>
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      "name": "プライバシー設定",
+      "url": "<?php echo $url; ?>",
+      "itemListElement": [{
+        "@type": "ListItem",
+        "position": 1,
+        "name": "プライバシー設定",
+        "item": {
+          "@type": "Thing",
+          "@id": "https://miikun95.net/your-privacy-choice/"
+        }
+      }]
+    }
+    </script>
+<?php include "/srv/www/html/includes/header.html" ?>
+    <header>
+      <div class="marquee-container">
+        <div class="marquee"></div>
+      </div>
+    </header>
+    <ol>
+      <li><a href="/" aria-label="トップページ">MiikunWorld95</a></li>
+      <li><b aria-hidden="true">-&gt;&nbsp;</b><span>プライバシー設定</span></li>
+    </ol>
+    <hr>
+    <main id="main">
+      <section>
+        <h2>プライバシー設定</h2>
+        <p>MiikunWorld IDにログインしていません</p>
+      </section>
+    </main>
+    <?php include "/srv/www/html/includes/footer.html"; ?>
+    <?php include "/srv/www/html/includes/cookie-consent.html"; ?>
+  </body>
+</html>

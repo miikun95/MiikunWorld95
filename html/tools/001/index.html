@@ -1,0 +1,104 @@
+<?php
+  if ($_SERVER["REMOTE_ADDR"] !== '127.0.0.1') {
+    $ip = htmlspecialchars($_SERVER["REMOTE_ADDR"], ENT_QUOTES, 'UTF-8');
+  } else {
+    $ip = htmlspecialchars($_SERVER['HTTP_X_FORWARDED_FOR'], ENT_QUOTES, 'UTF-8');
+  }
+  $remote = gethostbyaddr($ip);
+  if ($remote === $ip) {
+    $remote = "(逆引き設定なし)";
+  }
+  $ua = $_SERVER["HTTP_USER_AGENT"];
+  $ua_ch = $_SERVER["HTTP_SEC_CH_UA_FULL_VERSION_LIST"] ?? '<a href="?ua-ch=1">UA-CHを取得</a>';
+  include "/srv/www/html/includes/head1.html";
+?>
+    <meta name="description" content="IPアドレスを確認出来るツールです。IPアドレスだけではなくリモートホストやユーザーエージェント、UA-CHの取得にも対応しています。">
+    <meta name="keywords" content="IPアドレス,IP 確認,UA-CH 取得">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:site" content="@miikun95">
+    <meta name="twitter:creator" content="@miikun95">
+    <meta property="og:title" content="IPチェッカー 最新のUA-CHや、User-Agent、逆引き名にも対応のIP確認ツール｜MiikunWorld95">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://miikun95.net/tools/001/">
+    <meta property="og:image" content="https://miikun95.net/miikun95.png">
+    <title>IPチェッカー 最新のUA-CHや、User-Agent、逆引き名にも対応のIP確認ツール｜MiikunWorld95</title>
+<?php include "/srv/www/html/includes/head2.html"; ?>
+    <link rel="canonical" href="https://miikun95.net/tools/001/">
+    <style nonce="<?php echo $GLOBALS['csp_nonce']; ?>">
+<?php include "/srv/www/html/includes/style.html" ?>
+
+      dd { font-size: large; }
+    </style>
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      "name": "IPチェッカー",
+      "url": "https://miikun95.net/tools/001/",
+      "itemListElement": [{
+        "@type": "ListItem",
+        "position": 1,
+        "name": "便利ツール",
+        "item": {
+          "@type": "Thing",
+          "@id": "https://miikun95.net/tools/"
+        }
+      }, {
+        "@type": "ListItem",
+        "position": 2,
+        "name": "IPチェッカー",
+        "item": {
+          "@type": "Thing",
+          "@id": "https://miikun95.net/tools/001/"
+        }
+      }]
+    }
+    </script>
+<?php include "/srv/www/html/includes/header.html"; ?>
+    <header>
+      <div class="marquee-container">
+        <div class="marquee"><?php echo $message; ?></div>
+      </div>
+    </header>
+    <br>
+    <hr>
+    <ol>
+      <li><a href="/" aria-label="トップページ">MiikunWorld95</a></li>
+      <li><b aria-hidden="true">-&gt;&nbsp;</b><a href="/tools/">便利ツール</a></li>
+      <li aria-current="page"><b aria-hidden="true">-&gt;&nbsp;</b><span>IPチェッカー</span></li>
+    </ol>
+    <br>
+    <hr>
+      <p>クイックメニュー</p>
+    <ul>
+      <li aria-current="page"><span>IPアドレス確認</span></li>
+      <li><a href="/tools/002/">Base64変換</a></li>
+      <li><a href="/tools/003/">POSIX時間変換</a></li>
+    </ul>
+    <hr>
+    <main id="main">
+      <section>
+        <h2>IPチェッカー</h2>
+        <dl>
+          <dt>IPアドレス</dt>
+          <dd><?php echo htmlspecialchars($ip, ENT_QUOTES, "UTF-8"); ?></dd>
+          <dt>リモートホスト</dt>
+          <dd><?php echo htmlspecialchars($remote, ENT_QUOTES, "UTF-8"); ?></dd>
+          <dt>UA</dt>
+          <dd><?php echo htmlspecialchars($ua, ENT_QUOTES, "UTF-8"); ?></dd>
+          <dt>UA-CH</dt>
+          <dd><?php echo $ua_ch; ?></dd>
+        </dl>
+      </section>
+      <aside>
+        <hr>
+        CLIからの取得にも対応しています。<br>
+        <code>curl https://miikun95.net/ipcheck/</code>
+        <hr>
+      </aside>
+      <a href="/tools/" aria-label="ツール一覧に戻る">戻る</a>
+    </main>
+<?php include "/srv/www/html/includes/footer.html"; ?>
+<?php include "/srv/www/html/includes/cookie-consent.html" ?>
+  </body>
+</html>

@@ -1,0 +1,325 @@
+<?php
+$message = '';
+try {
+  $count = $GLOBALS['redis']->get('visit_count');
+  if ($count % 1000 === 0) {
+    $message = 'おめでとうございます！ キリ番ゲット！';
+  } else {
+    $message = 'ようこそ！miikun95のホームページ&nbsp;MiikunWorld95へ！';
+  }
+} catch (Exception $e) {
+  $count = '読込失敗 :(';
+  $message = 'ようこそ！miikun95のホームページ&nbsp;MiikunWorld95へ！';
+}
+$title = 'MiikunWorld95';
+$descr = '便利ツール集、フリーソフト、マイクラのMod、ブログ等様々なコンテンツをmiikun95のホームページ「MiikunWorld95」でチェックしよう！';
+$keywd = 'miikun95,MiikunWorld95,マイクラ Mod,マインクラフト Mod,フリーソフト,Web便利ツール,ブログ,自作ソフト';
+$url = 'https://miikun95.net/';
+include '/srv/www/html/includes/01.html'; ?>
+    <style nonce="<?php echo $GLOBALS['csp_nonce']; ?>">
+<?php include "/srv/www/html/includes/style.html"; ?>
+    </style>
+    <script nonce="<?php echo $GLOBALS['csp_nonce']; ?>" type="application/ld+json">
+      {
+        "@context" : "https://schema.org",
+        "@type" : "WebSite",
+        "schemaVersion": "https://schema.org/docs/releases.html#v30.0",
+        "name" : "MiikunWorld95",
+        "alternateName": ["M.W.95"],
+        "url" : "https://miikun95.net/",
+        "archivedAt": "https://web.archive.org/web/miikun95.net/",
+        "inLanguage" : {
+          "@type": "Language",
+          "alternateName": "ja"
+        },
+        "author" : {
+          "@type": "Person",
+          "name": "miikun95",
+          "givenName": "Taro",
+          "familyName": "Mii",
+          "identifier": "miikun95",
+          "gender": "https://schema.org/Male",
+          "description": "miikun95",
+          "knowsLanguage": {
+            "@type": "Language",
+            "alternateName": "ja"
+          },
+          "image": "https://miikun95.net/miikun95.png",
+          "url": "https://miikun95.net/profile/",
+          "sameAs": [
+            "https://github.com/miikun95/",
+            "https://www.x.com/miikun95/",
+            "https://www.instagram.com/miikun.95/",
+            "https://www.facebook.com/miikun95/",
+            "https://www.youtube.com/channel/UCG2I7k0jbXjyeNOzEc9Qitg",
+            "https://www.blogger.com/profile/15531813508732080195"
+          ]
+        },
+        "copyrightYear" : "2024",
+        "creator" : {
+          "@type": "Person",
+          "name": "miikun95",
+          "givenName": "Taro",
+          "familyName": "Mii",
+          "identifier": "miikun95",
+          "gender": "https://schema.org/Male",
+          "description": "miikun95",
+          "knowsLanguage": {
+            "@type": "Language",
+            "alternateName": "ja"
+          },
+          "image": "https://miikun95.net/miikun95.png",
+          "url": "https://miikun95.net/profile/",
+          "sameAs": [
+            "https://github.com/miikun95/",
+            "https://www.x.com/miikun95/",
+            "https://www.instagram.com/miikun.95/",
+            "https://www.facebook.com/miikun95/",
+            "https://www.youtube.com/channel/UCG2I7k0jbXjyeNOzEc9Qitg",
+            "https://www.blogger.com/profile/15531813508732080195"
+          ]
+        },
+        "dateCreated": "2024-06-01T07:00:00+09:00"
+      }
+    </script>
+    <script type="application/ld+json" nonce="<?php echo $GLOBALS['csp_nonce']; ?>">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebPage",
+      "breadcrumb": {
+        "@type": "BreadcrumbList",
+        "name": "MiikunWorld95",
+        "url": "https://miikun95.net/",
+        "itemListElement": [{
+          "@type": "ListItem",
+          "position": 1,
+          "name": "MiikunWorld95",
+          "item": {
+            "@type": "Thing",
+            "@id": "https://miikun95.net/"
+          }
+        }]
+      },
+      "author": {
+        "@type": "Person",
+        "name": "miikun95",
+        "givenName": "Taro",
+        "familyName": "Mii",
+        "identifier": "miikun95",
+        "gender": "https://schema.org/Male",
+        "description": "miikun95",
+        "knowsLanguage": {
+          "@type": "Language",
+          "alternateName": "ja"
+        },
+        "image": "https://miikun95.net/miikun95.png",
+        "url": "https://miikun95.net/profile/",
+        "sameAs": [
+          "https://github.com/miikun95/",
+          "https://www.x.com/miikun95/",
+          "https://www.instagram.com/miikun.95/",
+          "https://www.facebook.com/miikun95/",
+          "https://www.youtube.com/channel/UCG2I7k0jbXjyeNOzEc9Qitg",
+          "https://www.blogger.com/profile/15531813508732080195"
+        ]
+      },
+      "creator": {
+        "@type": "Person",
+        "name": "miikun95",
+        "givenName": "Taro",
+        "familyName": "Mii",
+        "identifier": "miikun95",
+        "gender": "https://schema.org/Male",
+        "description": "miikun95",
+        "knowsLanguage": {
+          "@type": "Language",
+          "alternateName": "ja"
+        },
+        "image": "https://miikun95.net/miikun95.png",
+        "url": "https://miikun95.net/profile/",
+        "sameAs": [
+          "https://github.com/miikun95/",
+          "https://www.x.com/miikun95/",
+          "https://www.instagram.com/miikun.95/",
+          "https://www.facebook.com/miikun95/",
+          "https://www.youtube.com/channel/UCG2I7k0jbXjyeNOzEc9Qitg",
+          "https://www.blogger.com/profile/15531813508732080195"
+        ]
+      },
+      "inLanguage" : {
+        "@type": "Language",
+        "alternateName": "ja"
+      },
+      "isFamilyFriendly": true,
+      "maintainer": {
+        "@type": "Person",
+        "name": "miikun95",
+        "givenName": "Taro",
+        "familyName": "Mii",
+        "identifier": "miikun95",
+        "gender": "https://schema.org/Male",
+        "description": "miikun95",
+        "knowsLanguage": {
+          "@type": "Language",
+          "alternateName": "ja"
+        },
+        "image": "https://miikun95.net/miikun95.png",
+        "url": "https://miikun95.net/profile/",
+        "sameAs": [
+          "https://github.com/miikun95/",
+          "https://www.x.com/miikun95/",
+          "https://www.instagram.com/miikun.95/",
+          "https://www.facebook.com/miikun95/",
+          "https://www.youtube.com/channel/UCG2I7k0jbXjyeNOzEc9Qitg",
+          "https://www.blogger.com/profile/15531813508732080195"
+        ]
+      },
+      "provider": {
+        "@type": "Person",
+        "name": "miikun95",
+        "givenName": "Taro",
+        "familyName": "Mii",
+        "identifier": "miikun95",
+        "gender": "https://schema.org/Male",
+        "description": "miikun95",
+        "knowsLanguage": {
+          "@type": "Language",
+          "alternateName": "ja"
+        },
+        "image": "https://miikun95.net/miikun95.png",
+        "url": "https://miikun95.net/profile/",
+        "sameAs": [
+          "https://github.com/miikun95/",
+          "https://www.x.com/miikun95/",
+          "https://www.instagram.com/miikun.95/",
+          "https://www.facebook.com/miikun95/",
+          "https://www.youtube.com/channel/UCG2I7k0jbXjyeNOzEc9Qitg",
+          "https://www.blogger.com/profile/15531813508732080195"
+        ]
+      },
+      "schemaVersion": "https://schema.org/docs/releases.html#v30.0",
+      "description": "<?php echo $descr; ?>",
+      "name": "MiikunWorld95",
+      "url": "https://miikun95.net/",
+      "archivedAt": "https://web.archive.org/web/miikun95.net/"
+    }
+    </script>
+    <script nonce="<?php echo $GLOBALS['csp_nonce']; ?>" type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "ImageObject",
+      "schemaVersion": "https://schema.org/docs/releases.html#v30.0",
+      "author": {
+        "@type": "Person",
+        "name": "miikun95",
+        "givenName": "Taro",
+        "familyName": "Mii",
+        "identifier": "miikun95",
+        "gender": "https://schema.org/Male",
+        "description": "miikun95",
+        "knowsLanguage": {
+          "@type": "Language",
+          "alternateName": "ja"
+        },
+        "image": "https://miikun95.net/miikun95.png",
+        "url": "https://miikun95.net/profile/",
+        "sameAs": [
+          "https://www.blogger.com/profile/15531813508732080195",
+          "https://github.com/miikun95/",
+          "https://www.x.com/miikun95/",
+          "https://www.instagram.com/miikun.95/",
+          "https://www.youtube.com/channel/UCG2I7k0jbXjyeNOzEc9Qitg"
+        ]
+      },
+      "creator": {
+        "@type": "Person",
+        "name": "miikun95",
+        "givenName": "Taro",
+        "familyName": "Mii",
+        "identifier": "miikun95",
+        "gender": "https://schema.org/Male",
+        "description": "miikun95",
+        "knowsLanguage": {
+          "@type": "Language",
+          "alternateName": "ja"
+        },
+        "image": "https://miikun95.net/miikun95.png",
+        "url": "https://miikun95.net/profile/",
+        "sameAs": [
+          "https://www.blogger.com/profile/15531813508732080195",
+          "https://github.com/miikun95/",
+          "https://www.x.com/miikun95/",
+          "https://www.instagram.com/miikun.95/",
+          "https://www.youtube.com/channel/UCG2I7k0jbXjyeNOzEc9Qitg"
+        ]
+      },
+      "contentUrl": "/miikun95.png",
+      "datePublished": "2024-01-10",
+      "description": "MiikunWorld95のミーくん",
+      "name": "ミーくん",
+      "copyrightNotice": "(C) 2024-2026 miikun95"
+    }
+    </script>
+    <meta name="p:domain_verify" content="fe40048b0f4806d783bccbc8a64812a8">
+    <meta name="facebook-domain-verification" content="a4b3dl78th09i3r0nfw8tpz70ockhi">
+    <meta name="google-site-verification" content="to-TLojcML6Ko6a_BrEP3gGsOxw0g1hEGaW_IwpkNdQ">
+    <meta name="msvalidate.01" content="027F9FA0A8EFA54BAFCDF389A346FBE0">
+<?php include '/srv/www/html/includes/header.html'; ?>
+    <header>
+      <div class="access-counter-container">
+        あなたは
+        <span class="access-counter" id="access-counter"><?php echo $count; ?></span>
+        人目の訪問者です！
+      </div>
+      <div class="marquee-container">
+        <div class="marquee"><?php echo $message; ?></div>
+      </div>
+    </header>
+    <br>
+    <hr>
+    <main id="main">
+      <section>
+        <h2>ようこそ！<br>MiikunWorld95へ！</h2>
+        <hr>
+        <picture>
+          <source srcset="/miikun95-128.avif" type="image/avif">
+          <source srcset="/miikun95-128.webp" type="image/webp">
+          <img src="/miikun95-128.png" title="miikun95" alt="miikun95" width="84" height="84" fetchpriority="high">
+        </picture>
+        <h3>プロフィール</h3>
+        <p>miikun95のプロフィールをチェック！</p>
+        <a href="/profile/">プロフィールを見る</a><br><br>
+        <hr>
+      </section>
+      <section>
+        <h2>IP確認、Base64変換などシンプルで役立つ便利ツール！</h2>
+        <h3>IPチェッカー 最新のUA-CHも確認出来るツールです！</h3>
+        <a href="/tools/001/">IPチェッカー</a>
+        <a href="/tools/">便利ツールを全て見る</a><br><br>
+      </section><hr>
+      <section>
+        <h2>ダウンロードセンター</h2>
+        <h3>MinecraftのMod&nbsp;ミーくんMod</h3>
+        <a href="/download-center/detail/miikun-mod/">ミーくんModのダウンロード</a><br><br>
+        <a href="/download-center/">ダウンロードセンターへ</a><br><br>
+      </section><hr>
+      <section>
+        <h2>MiikunWorld95のアプリが登場！</h2>
+        <p>このショートカットアプリをインストールすると、待受画面やデスクトップからMiikunWorld95に簡単にアクセス出来ます！</p>
+        <h3>インストール</h3>
+        <install>
+          <button type="button" id="install">インストール</button>
+        </install><br><br>
+        <a href="/download-center/detail/miikunworld95/">MiikunWorld95 アプリについて詳しく見る</a><br><br>
+      </section>
+    </main>
+<?php include '/srv/www/html/includes/footer.html';
+include '/srv/www/html/includes/cookie-consent.html'; ?>
+    <script type="module" nonce="<?php echo $GLOBALS['csp_nonce']; ?>">
+      "use strict";
+      document.getElementById("install").addEventListener("click", function() {
+        window.deferredPrompt.prompt();
+      });
+    </script>
+  </body>
+</html>

@@ -1,0 +1,68 @@
+{
+  "name": "MiikunWorld95",
+  "short_name": "MW95",
+  "description": "MiikunWorld95では、様々なコンテンツを投稿しています",
+  "id": "https://miikun95.net/",
+  "lang": "ja",
+  "dir": "ltr",
+  "orientation": "any",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "display_override": ["window-controls-overlay", "tabbed", "standalone", "fullscreen", "minimal-ui", "browser"],
+  "theme_color": "#A7D474",
+  "background_color": "#FFFFFF",
+  "prefer_related_applications": false,
+  "related_applications": [],
+  "icons": [
+    {
+      "src": "/miikun95-64.png",
+      "sizes": "64x64",
+      "type": "image/png"
+    },
+    {
+      "src": "/miikun95-128.png",
+      "sizes": "128x128",
+      "type": "image/png"
+    },
+    {
+      "src": "/miikun95-256.png",
+      "sizes": "256x256",
+      "type": "image/png"
+    },
+    {
+      "src": "/miikun95-384.png",
+      "sizes": "384x384",
+      "type": "image/png"
+    },
+    {
+      "src": "/miikun95-512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ],
+  "edge_side_panel": {
+    "preferred_width": 400
+  },
+  "splash_screen": {
+    "src": "/apple-touch-icon.png",
+    "sizes": "512x512",
+    "background_color": "#FFFFFF"
+  },
+  "screenshots": [
+    {
+      "src": "/ss-top-sp.png",
+      "sizes": "1080x2520",
+      "type": "image/png",
+      "form_factor": "narrow",
+      "label": "MiikunWorld95トップページ"
+    }
+  ],
+  "categories": ["utilities"],
+  "scope_extensions": [
+    { "type": "origin", "origin": "https://blog.miikun95.net" },
+    { "type": "origin", "origin": "https://id.miikun95.net" },
+    { "type": "origin", "origin": "https://m95.world" },
+    { "type": "origin", "origin": "https://miikun95.website" }
+  ]
+}

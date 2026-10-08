@@ -1,0 +1,86 @@
+<?php include '/srv/www/html/includes/head1.html'; ?>
+    <meta name="description" content="ブログ「miikunLog95」では様々な記事を投稿しています。">
+    <meta name="keywords" content="miikun95 miikunLog95">
+    <title>記事一覧｜MiikunLog95</title>
+    <meta property="og:title" content="記事一覧｜MiikunLog95">
+    <meta property="og:description" content="">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://blog.miikun95.net/article/">
+<?php include '/srv/www/html/includes/head2.html'; ?>
+    <link rel="canonical" href="https://blog.miikun95.net/article/">
+    <link rel="stylesheet" href="/style-blog.css" blocking="render">
+    <style nonce="<?php echo $GLOBALS['csp_nonce']; ?>">
+<?php include "/srv/www/html/includes/style.html"; ?>
+    </style>
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      "itemListElement": [{
+        "@type": "ListItem",
+        "position": 1,
+        "name": "miikunLog95",
+        "item": "https://blog.miikun95.net/blog/"
+      }, {
+        "@type": "ListItem",
+        "position": 2,
+        "name": "記事",
+        "item": "https://blog.miikun95.net/blog/article/"
+      }]
+    }
+    </script>
+<?php include '/srv/www/html/includes/header.html'; ?>
+    <header>
+      <div class="marquee-container">
+        <div class="marquee"></div>
+      </div>
+    </header>
+    <hr>
+    <p>ブログメニュー</p>
+    <ul>
+      <li>
+        <a href="/">
+          ブログトップ
+        </a>
+      </li>
+      <li aria-current="page">
+        <span>
+          記事一覧
+        </span>
+      </li>
+      <li>
+        <a href="/article/latest/" rel="nofollow">
+           最新記事
+        </a>
+      </li>
+    </ul>
+    <hr>
+    <br>
+    <div class="sidebar">
+      <p>サイドバー</p>
+      <div class="profile-container">
+        <img src="/miikun95-512.png" alt="miikun95のプロフィールアイコン" width="64" height="64">
+        <dl class="profile-data">
+          <dt>名前</dt>
+          <dd>miikun95</dd>
+        </dl>
+      </div>
+    </div>
+    <main id="main">
+      <h2>
+        記事一覧
+      </h2>
+      <section class="article-card">
+        <div class="article-eyecatch-img-container">
+          <img src="/resources/no-image.svg" class="article-eyecatch-img" width="130" height="65" alt="NoImage">
+        </div>
+        <h3 id="000001-title">ブログはじめました</h3>
+        <div class="article-link-container">
+          <a href="/article/000001/" class="article-link" aria-labelledby="000001-title">詳しく見る</a>
+        </div>
+      </section>
+    </main>
+<?php include "/srv/www/html/includes/footer.html"; ?>
+<?php include "/srv/www/html/includes/cookie-consent.html"; ?>
+  </body>
+</html>

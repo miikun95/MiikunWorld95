@@ -1,0 +1,21 @@
+<?php
+$method = $_SERVER['REQUEST_METHOD'] ?? 'GET';
+if (!in_array(strtoupper($method), ['GET', 'HEAD', 'OPTIONS'], true)) {
+  http_response_code(403);
+  exit;
+}
+$filePath = "/srv/www/html/pgp.gpg";
+$handle = fopen($filePath, "rb");
+if (!$handle) {
+  http_response_code(500);
+  exit;
+}
+if (flock($handle, LOCK_SH)) {
+  header("Content-Length: " . filesize($filePath));
+  fpassthru($handle);
+  flock($handle, LOCK_UN);
+} else {
+  http_response_code(503);
+}
+fclose($handle);
+exit;

@@ -1,0 +1,1 @@
+2026-02-05 19:26:23 : cURL error 77: error setting certificate file: /etc/ssl/certs/ca-certificates.crt (see https://curl.haxx.se/libcurl/c/libcurl-errors.html) for https://oauth2.googleapis.com/token
