@@ -11,7 +11,7 @@ sudo git commit -am "$Message"
 Write-Progress -Activity "処理中" -Status "2 / 6" -PercentComplete 34
 sudo git push
 Write-Progress -Activity "処理中" -Status "3 / 6" -PercentComplete 51
-Set-Location /srv/www/git/html/miikunworld95.git/
+Set-Location /srv/www/git/html/MiikunWorld95.git/
 sudo git update-server-info
 Write-Progress -Activity "処理中" -Status "4 / 6" -PercentComplete 68
 Set-Location /srv/www/
