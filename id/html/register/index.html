@@ -1,26 +1,116 @@
 <?php
+  require '../vendor/autoload.php';
+  use Google\Cloud\RecaptchaEnterprise\V1\Client\RecaptchaEnterpriseServiceClient;
+  use Google\Cloud\RecaptchaEnterprise\V1\Event;
+  use Google\Cloud\RecaptchaEnterprise\V1\Assessment;
+  use Google\Cloud\RecaptchaEnterprise\V1\CreateAssessmentRequest;
+  use Google\Cloud\RecaptchaEnterprise\V1\TokenProperties\InvalidReason;
+  $finish_registration = false;
+  $message = '';
+  $uuid = '';
+  (function() use (&$finish_registration, &$message, &$uuid) {
+    $pdo = new PDO('mysql:dbname=miikun_world_db;charset=utf8mb4', getenv('DB_USER'), getenv('DB_PASS'), [
+      PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
+      PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
+    ]);
+    if (isset($_GET['code'])) {
+      $oauth2 = new Google\Auth\OAuth2([
+        'clientId' => getenv('GOOGLE_CLIENT_ID'),
+        'clientSecret' => getenv('GOOGLE_CLIENT_SECRET'),
+        'redirectUri' => 'https://id.miikun95.net/register/',
+        'tokenCredentialUri' => 'https://oauth2.googleapis.com/token',
+      ]);
+      $oauth2->setCode($_GET['code']);
+      $idToken = $oauth2->fetchAuthToken()['id_token'] ?? null;
+      if (!$idToken) { return; }
+      $guzzle = new GuzzleHttp\Client();
+      $response = $guzzle->get('https://oauth2.googleapis.com/tokeninfo', ['query' => ['id_token' => $idToken]]);
+      $uid = json_decode($response->getBody()->getContents(), true)['sub'];
+      if (isset($uid)) {
+        $stmt = $pdo->prepare("SELECT uuid FROM mwid_external_login WHERE provider = 'google' AND external_uid = ?");
+        $stmt->execute([$uid]);
+        $uuid = $stmt->fetchColumn();
+        $stmt = $pdo->prepare("SELECT username FROM miikun_world_id WHERE uuid = ?");
+        $stmt->execute([$uuid]);
+        $username = $stmt->fetchColumn();
+        if (!$uuid) {
+          $data = random_bytes(16);
+          $data[6] = chr(ord($data[6]) & 0x0f | 0x40);
+          $data[8] = chr(ord($data[8]) & 0x3f | 0x80);
+          $uuid = vsprintf('%s%s-%s-%s-%s-%s%s%s', str_split(bin2hex($data), 4));
+          $pdo->beginTransaction();
+          $stmt = $pdo->prepare("INSERT INTO miikun_world_id SET uuid = ?");
+          $stmt->execute([$uuid]);
+          $stmt = $pdo->prepare("INSERT INTO mwid_external_login SET uuid = ?, provider = 'google', external_uid = ?");
+          $stmt->execute([$uuid, $uid]);
+          $pdo->commit();
+        } elseif ($username === null) {
+          $finish_registration = true;
+          return;
+        } else {
+          $message = '既に登録されています';
+          return;
+        }
+      } else { return; }
+      $finish_registration = true;
+      return;
+/*
+    } elseif (isset($_POST['loginid'])) {
+      $data = json_decode(file_get_contents('php://input'), true);
+      $login_id = htmlspecialchars(trim($data['login_id']),ENT_QUOTES,'UTF-8');
+      $username = htmlspecialchars(trim($data['username'] ?? $login_id),ENT_QUOTES,'UTF-8');
+      $stmt = $pdo->prepare("SELECT COUNT(*) FROM miikun_world_id WHERE login_id = ?");
+      $stmt->execute([$login_id]);
+      if ($stmt->fetchColumn() > 0 || !$data || empty($data['login_id'])) { return; }
+      $stmt = $pdo->prepare("INSERT INTO miikun_world_id (login_id, username) VALUES (:login_id, :username)");
+      $stmt->execute([
+        ':login_id' => $login_id,
+        ':username' => $username
+      ]);
+      exit;
+*/
+    } elseif (isset($_POST['nickname'])) {
+      $recaptchaKey = getEnv('RECAPTCHA_KEY');
+      $project = 'miikunworld95-1759993451408';
+      $client = new RecaptchaEnterpriseServiceClient([
+        'transport' => 'rest',
+        'credentials' => getEnv('RECAPTCHA_AGENT_TOKEN_FILE')
+      ]);
+      $projectName = $client->projectName($project);
+      $event = (new Event())
+        ->setSiteKey($recaptchaKey)
+        ->setToken($_POST['token'])
+        ->setHashedAccountId(hash('sha512', htmlspecialchars(trim($_POST['uuid']),ENT_QUOTES,'UTF-8'), true));
+      $assessment = (new Assessment())
+        ->setEvent($event);
+      $request = (new CreateAssessmentRequest())
+        ->setParent($projectName)
+        ->setAssessment($assessment);
+      $response = $client->createAssessment($request);
+      if ($response->getTokenProperties()->getValid() == false) {
+        return;
+      }
+      if ($response->getTokenProperties()->getAction() === $_POST['action']) {
+        $stmt = $pdo->prepare("UPDATE miikun_world_id SET username = ?, website = ? WHERE uuid = ?");
+        $stmt->execute([htmlspecialchars(trim($_POST['nickname']),ENT_QUOTES,'UTF-8'), htmlspecialchars(trim($_POST['website']),ENT_QUOTES,'UTF-8'), htmlspecialchars(trim($_POST['uuid']),ENT_QUOTES,'UTF-8')]);
+      } else { return; }
+    } else { return; }
+  })();
   http_response_code(503);
   $state = base64_encode(random_bytes(32));
   $_SESSION['oauth_state'] = $state;
   $recaptcha_act = 'REGISTRATION';
   $query = 'label';
   $index = '0';
-  include "/srv/www/html/includes/head1.html"
+  $title = 'ユーザー登録｜MiikunWorld ID';
+  $descr = 'MiikunWorld ID';
+  $keywd = 'miikun95';
+  $url = 'https://id.miikun95.net/register/';
+  include "/srv/www/html/includes/01.html";
+  include '/srv/www/html/includes/06.html';
 ?>
-    <meta name="description" content="MiikunWorld ID">
-    <meta name="keywords" content="miikun95">
-    <title>MiikunWorld ID</title>
-    <meta property="og:title" content="MiikunWorld ID">
-    <meta property="og:type" content="website">
-    <meta property="og:url" content="https://id.miikun95.net/">
-    <meta property="og:image" content="https://miikun95.net/miikun95.png">
-    <meta property="og:site_name" content="MiikunWorld ID">
-<?php include "/srv/www/html/includes/head2.html" ?>
-    <link rel="canonical" href="https://miikun95.net/profile/">
-<?php include '/srv/www/html/includes/06.html'; ?>
     <style nonce="<?php echo $GLOBALS['csp_nonce']; ?>">
 <?php include "/srv/www/html/includes/style.html" ?>
-
       #g-recaptcha {
         width: 301px;
         height: 75px;
@@ -31,19 +121,16 @@
         background-repeat: repeat;
         background-size: 32px 32px;
       }
-
       .gsi-material-button {
         height: 40px;
         border: 3px ridge #747775;
         white-space: nowrap;
         overflow: hidden;
       }
-
       .gsi-material-button-content-wrapper {
         display: inline-block;
         vertical-align: top;
       }
-
       .gsi-material-button-icon {
         display: inline-block;
         vertical-align: middle;
@@ -52,25 +139,60 @@
         margin-left: 12px;
         margin-right: 10px;
       }
-
       .gsi-material-button-contents {
         display: inline-block;
         vertical-align: middle;
         margin-right: 12px;
       }
     </style>
-<?php include "/srv/www/html/includes/header.html" ?>
+<?php include "/srv/www/html/includes/header-mwid.html" ?>
     <header>
       <div class="marquee-container">
-        <div class="marquee" id="marquee">現在、新規登録を停止しています。</div>
+        <div class="marquee" id="marquee"><?php echo $message; ?></div>
       </div>
     </header>
     <br>
     <hr>
     <main id="main">
       <section>
+<?php if ($finish_registration === true) { ?>
+        <h2>MiikunWorldIDへようこそ！</h2>
+        
+        <form method="POST" action="./#">
+          <label>
+            表示名
+            <input type="text" name="nickname" placeholder="ニックネーム" autocomplete="nickname" required>
+          </label>
+          <label>
+            ホームぺージ(任意)
+            <input type="url" name="website" placeholder="ホームページ" autocomplete="url">
+          </label>
+          <input type="hidden" name="token" id="recaptcha-token" required readonly>
+          <input type="hidden" name="action" value="<?php echo $recaptcha_act; ?>" required readonly>
+          <input type="hidden" name="uuid" value="<?php echo $uuid; ?>" required readonly>
+          <div id="g-recaptcha" class="hidden"></div>
+          <div aria-live="polite" class="load">
+            <div role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" aria-labelledby="status-label" id="load-progress-bar" class="hidden"></div>
+            <p id="status-label" class="hidden">読込中...</p>
+          </div>
+          <br>
+          <a href="/delete/">ID登録を取消</a>
+          <button id="register">登録</button><br><br>
+        </form>
+        <hr>
+<?php } else { ?>
         <h2>ユーザー登録</h2>
-        <form method="POST">
+        <button type="button" class="gsi-material-button" id="g-login">
+          <span class="gsi-material-button-state"></span>
+            <span class="gsi-material-button-content-wrapper">
+              <span class="gsi-material-button-icon">
+              <img src="/google-logo.svg" title="Google" alt="" width="20" height="20">
+            </span>
+            <span class="gsi-material-button-contents">Googleで登録</span>
+          </span>
+        </button><br><br><hr>
+        <p>パスキーで登録は工事中です</p>
+        <form method="POST" class="hidden">
           <label>
             ログインID
             <input type="text" name="loginid" placeholder="ログインID" autocomplete="username" required disabled><br>
@@ -81,7 +203,7 @@
           </label>
           <label>
             ホームぺージ(任意)
-            <input type="url" name="website" placeholder="ホームぺージ" autocomplete="url" required disabled><br>
+            <input type="url" name="website" placeholder="ホームぺージ" autocomplete="url" disabled><br>
           </label>
           <input type="hidden" name="token" id="recaptcha-token" readonly>
           <input type="hidden" name="action" value="<?php echo $recaptcha_act; ?>" readonly>
@@ -92,50 +214,52 @@
           </div>
           <br>
           <button id="register" disabled>登録</button><br><br>
-        </form>
-        <a href="/login/">既にアカウントを持っています</a><br><br>
+        </form><hr>
+        <a href="/login/">ログイン</a><br><br>
+        <a href="/delete/">IDを削除</a><br><br>
         <a href="//miikun95.net/">MiikunWorld95に戻る</a>
-        <hr>
-        <h2>外部アカウントで登録</h2>
-        <button type="button" class="gsi-material-button" id="g-login">
-          <span class="gsi-material-button-state"></span>
-            <span class="gsi-material-button-content-wrapper">
-              <span class="gsi-material-button-icon">
-              <img src="/google-logo.svg" title="Google" alt="" width="20" height="20">
-            </span>
-            <span class="gsi-material-button-contents">Googleで登録</span>
-          </span>
-        </button>
-        <script nonce="<?php echo $GLOBALS['csp_nonce']; ?>">
-          document.getElementById("g-login").addEventListener("click", oauthSignIn);
-            function oauthSignIn() {
-            var form = document.createElement("form");
-            form.setAttribute("method", "GET");
-            form.setAttribute("action", "https://accounts.google.com/o/oauth2/v2/auth");
-             var params = {
-              "client_id": "20945063141-gqnclsi7fe466ado8u6c4svpvssi1kid.apps.googleusercontent.com",
-              "redirect_uri": "https://id.miikun95.net/register.html",
-              "response_type": "code",
-              "scope": "openid",
-              "include_granted_scopes": "true",
-              "state": "<?php echo $state; ?>"
-            };
-
-            for (var p in params) {
-              var input = document.createElement("input");
-              input.setAttribute("type", "hidden");
-              input.setAttribute("name", p);
-              input.setAttribute("value", params[p]);
-              form.appendChild(input);
-            }
-
-            document.body.appendChild(form);
-            form.submit();
-          }
-        </script>
-      </main>
-<?php include "/srv/www/html/includes/footer.html"; ?>
-<?php include "/srv/www/html/includes/cookie-consent.html"; ?>
+<?php } ?>
+      </section>
+    </main>
+    <script nonce="<?php echo $GLOBALS['csp_nonce']; ?>">
+      "use strict";
+      window.verifyRequestXHR = function(t) {
+        if (t) {
+          document.getElementById("recaptcha-token").setAttribute("value", t);
+          document.getElementById("recaptcha-token").value = t;
+        }
+        var recaptcha = document.getElementById("g-recaptcha");
+      }
+    </script>
+<?php include "/srv/www/html/includes/05.html";
+if (!$finish_registration) { ?>
+    <script nonce="<?php echo $GLOBALS['csp_nonce']; ?>">
+      "use strict";
+      document.getElementById("g-login").addEventListener("click", function() {
+        var form = document.createElement("form");
+        form.setAttribute("method", "GET");
+        form.setAttribute("action", "https://accounts.google.com/o/oauth2/v2/auth");
+        var params = {
+          "client_id": "20945063141-gqnclsi7fe466ado8u6c4svpvssi1kid.apps.googleusercontent.com",
+          "redirect_uri": "https://id.miikun95.net/register/",
+          "response_type": "code",
+          "scope": "openid",
+          "include_granted_scopes": "true",
+          "state": "<?php echo $state; ?>"
+        };
+        for (var p in params) {
+          var input = document.createElement("input");
+          input.setAttribute("type", "hidden");
+          input.setAttribute("name", p);
+          input.setAttribute("value", params[p]);
+          form.appendChild(input);
+        }
+        document.body.appendChild(form);
+        form.submit();
+      });
+    </script>
+<?php }
+/*
     <script nonce="<?php echo $GLOBALS['csp_nonce']; ?>">
       "use strict";
       document.getElementById("register").addEventListener("click", function() {
@@ -143,7 +267,6 @@
           alert("お使いのブラウザはパスキーに対応していません。代わりに、Googleでサインインをお試しください。");
           return;
         }
-
         var response = grecaptcha.enterprise.getResponse(window.widgetId);
         if (!response) { return; }
         navigator.credentials.create({
@@ -170,8 +293,8 @@
             authenticatorSelection: {
               requireResidentKey: true,
               userVerification: "preferred"
-            },
-          } 
+            }
+          }
         }).then(function(credential) {
           grecaptcha.reset(widgetId);
           var register = createXHR();
@@ -180,8 +303,7 @@
             captcha: response,
             action: "REGISTRATION"
           };
-
-          register.open("POST", "/register.html", true);
+          register.open("POST", "/register/", true);
           register.setRequestHeader("Content-Type", "application/json");
           register.onload = function() {
             if (register.status === 200) {
@@ -192,6 +314,6 @@
         }).catch(function(e) {});
       });
     </script>
-<?php #include "/srv/www/html/includes/under-construction.html" ?>
+*/ ?>
   </body>
 </html>

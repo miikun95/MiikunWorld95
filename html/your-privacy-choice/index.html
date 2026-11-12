@@ -39,10 +39,45 @@ include '/srv/www/html/includes/01.html';
     <main id="main">
       <section>
         <h2>プライバシー設定</h2>
-        <p>MiikunWorld IDにログインしていません</p>
+        <div id="privacy-setting-container" class="hidden">
+          <dl>
+            <dt>同意ステータス：</dt><dd id="consent-status">システム工事中</dd>
+            <dt>同意済のプライバシーポリシーのバージョン：</dt><dd id="policy-version">システム工事中</dd>
+          </dl>
+          <hr>
+          <p>Cookie設定</p>
+          <div>
+            必須Cookie<input type="checkbox" checked disabled>
+            <div class="hidden">
+              <div>
+                MiikunWorld95<input type="checkbox" checked disabled>
+              </div>
+              <div>
+                Google reCAPTCHA<input type="checkbox" checked disabled>
+              </div>
+            </div>
+          </div>
+          <div>
+            機能補助Cookie<input type="checkbox" disabled>
+            <div class="hidden">
+              <div>
+                YouTube<input type="checkbox" disabled>
+              </div>
+            </div>
+          </div>
+        </div>
+        <noscript>JavaScriptが無効です。</noscript>
+      </section>
+      <section>
+        <h2>データの削除</h2>
+        <a href="//id.miikun95.net/delete/">MiikunWorld IDの削除</a>
       </section>
     </main>
-    <?php include "/srv/www/html/includes/footer.html"; ?>
-    <?php include "/srv/www/html/includes/cookie-consent.html"; ?>
+<?php include "/srv/www/html/includes/footer.html";
+include "/srv/www/html/includes/cookie-consent.html"; ?>
+    <script nonce="<?php echo $GLOBALS['csp_nonce']; ?>">
+      "use strict";
+      document.getElementById("privacy-setting-container").removeAttribute("class");
+    </script>
   </body>
 </html>

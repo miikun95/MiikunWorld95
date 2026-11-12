@@ -137,4 +137,5 @@ div[role="checkbox"] {
 .gsi-material-button:hover, .gsi-material-button:focus { border: 3px groove #747775 !important; }
 @media screen and (max-width: 767px) {
   [role="progressbar"], [role="progressbar"]::after { width: 200px; }
+  .menu-open { transform: translateX(0) !important; }
 }

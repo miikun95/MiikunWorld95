@@ -1,0 +1,262 @@
+<?php
+  require '../vendor/autoload.php';
+  $deleted = false;
+  $message = '';
+  $uuid = '';
+  (function() use (&$deleted, &$message, &$uuid) {
+    $pdo = new PDO('mysql:dbname=miikun_world_db;charset=utf8mb4', getenv('DB_USER'), getenv('DB_PASS'), [
+      PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
+      PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
+    ]);
+    if (isset($_GET['code'])) {
+      $oauth2 = new Google\Auth\OAuth2([
+        'clientId' => getenv('GOOGLE_CLIENT_ID'),
+        'clientSecret' => getenv('GOOGLE_CLIENT_SECRET'),
+        'redirectUri' => 'https://id.miikun95.net/delete/',
+        'tokenCredentialUri' => 'https://oauth2.googleapis.com/token',
+      ]);
+      $oauth2->setCode($_GET['code']);
+      $accessToken = $oauth2->fetchAuthToken()['access_token'] ?? null;
+      $idToken = $oauth2->fetchAuthToken()['id_token'] ?? null;
+      if (!$idToken) { return; }
+      $guzzle = new GuzzleHttp\Client();
+      $response = $guzzle->get('https://oauth2.googleapis.com/tokeninfo', ['query' => ['id_token' => $idToken]]);
+      $uid = json_decode($response->getBody()->getContents(), true)['sub'];
+      if (isset($uid)) {
+        $stmt = $pdo->prepare("SELECT uuid FROM mwid_external_login WHERE provider = 'google' AND external_uid = ?");
+        $stmt->execute([$uid]);
+        $uuid = $stmt->fetchColumn();
+        if (isset($uuid)) {
+          if ($accessToken) {
+            $guzzle = new GuzzleHttp\Client();
+            try {
+              $guzzle->post('https://oauth2.googleapis.com/revoke', [
+                'form_params' => ['token' => $accessToken]
+              ]);
+            } catch (Exception $e) {
+              $message = 'Googleの連携解除に失敗しました。Googleアカウント設定から手動で削除してください。';
+            }
+          }
+          $stmt = $pdo->prepare("SELECT uuid FROM mwid_external_login WHERE provider = 'google' AND external_uid = ?");
+          $stmt->execute([$uid]);
+          $uuid = $stmt->fetchColumn();
+          if ($uuid) {
+            $pdo->beginTransaction();
+            $stmt = $pdo->prepare("DELETE FROM miikun_world_id WHERE uuid = ?");
+            $stmt->execute([$uuid]);
+            $pdo->commit();
+          }
+        } else {
+          $message = '登録されていません';
+          return;
+        }
+      } else { return; }
+      $deleted = true;
+      return;
+/*
+    } elseif (isset($_POST['loginid'])) {
+      $data = json_decode(file_get_contents('php://input'), true);
+      $login_id = htmlspecialchars(trim($data['login_id']),ENT_QUOTES,'UTF-8');
+      $username = htmlspecialchars(trim($data['username'] ?? $login_id),ENT_QUOTES,'UTF-8');
+      $stmt = $pdo->prepare("SELECT COUNT(*) FROM miikun_world_id WHERE login_id = ?");
+      $stmt->execute([$login_id]);
+      if ($stmt->fetchColumn() > 0 || !$data || empty($data['login_id'])) { return; }
+      $stmt = $pdo->prepare("INSERT INTO miikun_world_id (login_id, username) VALUES (:login_id, :username)");
+      $stmt->execute([
+        ':login_id' => $login_id,
+        ':username' => $username
+      ]);
+      exit;
+*/
+    } else { return; }
+  })();
+  http_response_code(503);
+  $state = base64_encode(random_bytes(32));
+  $_SESSION['oauth_state'] = $state;
+  $recaptcha_act = 'REGISTRATION';
+  $query = 'label';
+  $index = '0';
+  $title = 'MiikunWorld IDを削除｜MiikunWorld ID';
+  $descr = 'MiikunWorld ID';
+  $keywd = 'miikun95';
+  $url = 'https://id.miikun95.net/register/';
+  include "/srv/www/html/includes/01.html";
+  include '/srv/www/html/includes/06.html';
+?>
+    <style nonce="<?php echo $GLOBALS['csp_nonce']; ?>">
+<?php include "/srv/www/html/includes/style.html" ?>
+      #g-recaptcha {
+        width: 301px;
+        height: 75px;
+        overflow: hidden;
+        border: 1px solid #000000;
+        border-radius: 4px;
+        background-image: url("/miikun95-64.webp");
+        background-repeat: repeat;
+        background-size: 32px 32px;
+      }
+      .gsi-material-button {
+        height: 40px;
+        border: 3px ridge #747775;
+        white-space: nowrap;
+        overflow: hidden;
+      }
+      .gsi-material-button-content-wrapper {
+        display: inline-block;
+        vertical-align: top;
+      }
+      .gsi-material-button-icon {
+        display: inline-block;
+        vertical-align: middle;
+        width: 20px;
+        height: 20px;
+        margin-left: 12px;
+        margin-right: 10px;
+      }
+      .gsi-material-button-contents {
+        display: inline-block;
+        vertical-align: middle;
+        margin-right: 12px;
+      }
+    </style>
+<?php include "/srv/www/html/includes/header-mwid.html" ?>
+    <header>
+      <div class="marquee-container">
+        <div class="marquee" id="marquee"><?php echo $message; ?></div>
+      </div>
+    </header>
+    <br>
+    <hr>
+    <main id="main">
+      <section>
+<?php if ($deleted === true) { ?>
+        <h2>MiikunWorld IDを削除</h2>
+        <hr>
+<?php } else { ?>
+        <h2>MiikunWorld IDを削除</h2>
+        <button type="button" class="gsi-material-button" id="g-login">
+          <span class="gsi-material-button-state"></span>
+            <span class="gsi-material-button-content-wrapper">
+              <span class="gsi-material-button-icon">
+              <img src="/google-logo.svg" title="Google" alt="" width="20" height="20">
+            </span>
+            <span class="gsi-material-button-contents">Googleで続行</span>
+          </span>
+        </button><br><br><hr>
+        <p>パスキー認証は工事中です</p>
+        <form method="POST" class="hidden">
+          <label>
+            ログインID
+            <input type="text" name="loginid" placeholder="ログインID" autocomplete="username" required disabled><br>
+          </label>
+          <input type="hidden" name="token" id="recaptcha-token" readonly>
+          <input type="hidden" name="action" value="<?php echo $recaptcha_act; ?>" readonly>
+          <div id="g-recaptcha" class="hidden"></div>
+          <div aria-live="polite" class="load">
+            <div role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" aria-labelledby="status-label" id="load-progress-bar" class="hidden"></div>
+            <p id="status-label" class="hidden">読込中...</p>
+          </div>
+          <br>
+          <button id="register" disabled>削除</button><br><br>
+        </form><hr>
+        <a href="/login/">ログイン</a><br><br>
+        <a href="//miikun95.net/">MiikunWorld95に戻る</a>
+<?php } ?>
+      </section>
+    </main>
+    <script nonce="<?php echo $GLOBALS['csp_nonce']; ?>">
+      "use strict";
+      window.verifyRequestXHR = function(t) {
+        if (t) {
+          document.getElementById("recaptcha-token").setAttribute("value", t);
+          document.getElementById("recaptcha-token").value = t;
+        }
+        var recaptcha = document.getElementById("g-recaptcha");
+      }
+    </script>
+<?php include "/srv/www/html/includes/05.html";
+if (!$deleted) { ?>
+    <script nonce="<?php echo $GLOBALS['csp_nonce']; ?>">
+      "use strict";
+      document.getElementById("g-login").addEventListener("click", function() {
+        var form = document.createElement("form");
+        form.setAttribute("method", "GET");
+        form.setAttribute("action", "https://accounts.google.com/o/oauth2/v2/auth");
+        var params = {
+          "client_id": "20945063141-gqnclsi7fe466ado8u6c4svpvssi1kid.apps.googleusercontent.com",
+          "redirect_uri": "https://id.miikun95.net/delete/",
+          "response_type": "code",
+          "scope": "openid",
+          "include_granted_scopes": "true",
+          "state": "<?php echo $state; ?>"
+        };
+        for (var p in params) {
+          var input = document.createElement("input");
+          input.setAttribute("type", "hidden");
+          input.setAttribute("name", p);
+          input.setAttribute("value", params[p]);
+          form.appendChild(input);
+        }
+        document.body.appendChild(form);
+        form.submit();
+      });
+    </script>
+<?php }
+/*
+    <script nonce="<?php echo $GLOBALS['csp_nonce']; ?>">
+      "use strict";
+      document.getElementById("register").addEventListener("click", function() {
+        if (!window.PublicKeyCredential) {
+          alert("お使いのブラウザはパスキーに対応していません。代わりに、Googleでサインインをお試しください。");
+          return;
+        }
+        var response = grecaptcha.enterprise.getResponse(window.widgetId);
+        if (!response) { return; }
+        navigator.credentials.create({
+          publicKey: {
+            challenge: new Uint8Array(32),
+            rp: {
+              name: "miikunworld-id",
+              id: "id.miikun95.net"
+            },
+            user: {
+              id: new Uint8Array([65, 66, 67, 68, 69]).buffer,
+              name: document.getElementById("loginid").textContent.replace(/&/g, "&amp;").replace(/'/g, "&apos;").replace(/"/g, "&quot;").replace(/</g, "&lt;").replace(/>/g, "&gt;").trim(),
+              displayName: document.getElementById("username").textContent.replace(/&/g, "&amp;").replace(/'/g, "&apos;").replace(/"/g, "&quot;").replace(/</g, "&lt;").replace(/>/g, "&gt;").trim(),
+            },
+            pubKeyCredParams: [
+              {alg: -7, type:"public-key"},
+              {alg: -35, type:"public-key"},
+              {alg: -36, type:"public-key"}
+            ],
+            excludeCredentials: [{
+              id: new Uint8Array([65, 66, 67, 68, 69]).buffer,
+              type: "public-key"
+            }],
+            authenticatorSelection: {
+              requireResidentKey: true,
+              userVerification: "preferred"
+            }
+          }
+        }).then(function(credential) {
+          grecaptcha.reset(widgetId);
+          var register = createXHR();
+          var data = {
+            name: document.getElementById("username").textContent.replace(/&/g, "&amp;").replace(/'/g, "&apos;").replace(/"/g, "&quot;").replace(/</g, "&lt;").replace(/>/g, "&gt;").trim(),
+            captcha: response,
+            action: "REGISTRATION"
+          };
+          register.open("POST", "/register/", true);
+          register.setRequestHeader("Content-Type", "application/json");
+          register.onload = function() {
+            if (register.status === 200) {
+              document.getElementById("username").innerText = "";
+            }
+          };
+          register.send(JSON.stringify(data));
+        }).catch(function(e) {});
+      });
+    </script>
+*/ ?>
+  </body>
+</html>

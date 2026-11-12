@@ -42,7 +42,7 @@ $request = (new CreateAssessmentRequest())
   ->setParent($projectName)
   ->setAssessment($assessment);
 $response = $client->createAssessment($request);
-if ($response->getTokenProperties()->getValid() == false) {
+if ($response->getTokenProperties()->getValid() === false) {
   echo '検証に失敗しました:(　あなたはロボットかもしれません。';
   exit;
 }
